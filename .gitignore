@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io/api/phpstorm,sublimetext,windows,osx,composer
 
+### Twig PHP ###
+cache/
+
 ### PhpStorm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
 
