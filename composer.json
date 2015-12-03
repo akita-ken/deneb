@@ -8,6 +8,7 @@
     "require": {
         "slim/slim": "^3.0@RC",
         "slim/twig-view": "^2.0",
-        "pear-pear.php.net/config_lite": "*"
+        "pear-pear.php.net/config_lite": "*",
+        "aura/session": "^2.0"
     }
 }
