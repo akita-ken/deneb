@@ -9,6 +9,10 @@
     // Create container
     $container = new \Slim\Container($configuration);
 
+    // Create session factory
+    $session_factory = new \Aura\Session\SessionFactory;
+    $session = $session_factory->newInstance($_COOKIE);
+
     // Register component on container
     $container['view'] = function ($c) {
         $view = new \Slim\Views\Twig('templates', [
@@ -31,15 +35,32 @@
         $app->get('/', function($request, $response, $args) {
             return $this->view->render($response, 'base.twig');
         });
+
+        $app->get('/admin', function($request, $response, $args) use ($session) {
+            $segment = $session->getSegment('deneb');
+            if ($segment->get('auth')) {
+                if (!file_exists('pages')) {
+                    mkdir('pages', 0755);
+                }
+                return $this->view->render($response, 'admin.twig');
+            } else {
+                return $response->withRedirect('/deneb');
+            }
+            
+        });
     } else {
         $app->get('/', function($request, $response, $args) {
             return $this->view->render($response, 'firstrun.twig');
         });
 
-        $app->post('/firstRun', function($request, $response, $args) {
+        $app->post('/firstRun', function($request, $response, $args) use ($session) {
             $userDetails = $request->getParsedBody();
             if(createAdminUser($userDetails)) {
-                return $this->view->render($response, 'admin.twig');
+                $segment = $session->getSegment('deneb');
+                $segment->set('username', $userDetails['username']);
+                $segment->set('auth', true);
+
+                return $response->withRedirect('/deneb/admin', 301);
             } else {
                 return $this->view->render($response, 'error.twig');
             }
@@ -74,5 +95,9 @@
         $config->save();
 
         return true;
+    }
+
+    function loadPages() {
+        
     }
 ?>
