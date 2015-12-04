@@ -1,3 +1,24 @@
+@font-face {
+  font-family: 'Raleway';
+  src: url('../fonts/Raleway-SemiBold.ttf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSans';
+  src: url('../fonts/NotoSans-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSans';
+  src: url('../fonts/NotoSans-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
 .wrap {
   min-height: 100%;
   height: auto !important;
@@ -10,6 +31,40 @@
   background: #1a1a1a;
 }
 
+.ink-navigation ul.menu.horizontal li a {
+  padding: 14px 20px;
+}
+
 html, body {
   height: 100%;
+}
+
+#kennyl {
+  font-family: 'NotoSans';
+  font-size: 24px;
+  font-weight: 400;
+  text-shadow: 0px 1px 1px #006699;
+}
+
+#kennyl a {
+  padding: 8px 16px;
+}
+
+#sidebar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  height: 100% !important;
+}
+
+.borderless-grid {
+  padding: 0;
+}
+
+.darkBlue {
+  color: #00aadd;
+}
+
+.lightBlue {
+  color: #99ccff;
 }
