@@ -1,5 +1,5 @@
 <?php
-    
+
     $configuration = [
         'settings' => [
             'displayErrorDetails' => true,
@@ -29,7 +29,7 @@
 
     // Create app
     $app = new \Slim\App($container);
-    
+
     // Render Twig template in route
     if (firstRunCheck()) {
         $app->get('/', function($request, $response, $args) {
@@ -44,9 +44,19 @@
                 }
                 return $this->view->render($response, 'admin.twig');
             } else {
-                return $response->withRedirect('/deneb');
+                return $this->view->render($response, 'login.twig');
             }
-            
+        });
+
+        $app->post('/auth', function($request, $response, $args) use ($session) {
+          $loginDetails = $request->getParsedBody();
+          if (doAuthentication($loginDetails)) {
+            $segment = $session->getSegment('deneb');
+            $segment->set('username', $loginDetails['username']);
+            $segment->set('auth', true);
+
+            return $response->withRedirect('/deneb/admin', 301);
+          }
         });
     } else {
         $app->get('/', function($request, $response, $args) {
@@ -77,7 +87,7 @@
         if (!$configFileExists) {
             if (file_exists('config.ini')) {
                 $configFileExists = true;
-            } 
+            }
             return $configFileExists;
         } else {
             return $configFileExists;
@@ -98,6 +108,14 @@
     }
 
     function loadPages() {
-        
+      
+    }
+
+    function doAuthentication($loginDetails) {
+      $config = new Config_Lite('config.ini');
+      if (($loginDetails['username'] == $config->get('admin', 'username')) && password_verify($loginDetails['password'], $config->get('admin', 'password'))) {
+        return true;
+      }
+      return false;
     }
 ?>
