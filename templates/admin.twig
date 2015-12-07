@@ -3,9 +3,9 @@
 {% block title %}{% endblock %}
 
 {% block navmenu %}
-  <li><a class="push-right" href=#">Logout</a></li>
+  <li><a class="push-right" href="/deneb/logout">Logout</a></li>
 {% endblock %}
-  
+
 {% block content %}
   <div class="ink-grid borderless-grid">
     <div class="column-group">
@@ -13,7 +13,10 @@
         test
       </div>
 
-    <div class="all-70"></div>
+      <div id="mainpanel" class="all-70">
+        <h1>Administration</h1>
+      </div>
+    </div>
   </div>
 
 {% endblock %}
