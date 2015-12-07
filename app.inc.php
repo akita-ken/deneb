@@ -58,6 +58,12 @@
             return $response->withRedirect('/deneb/admin', 301);
           }
         });
+
+        $app->get('/logout', function($request, $response, $args) use ($session) {
+          $session->destroy();
+
+          return $response->withRedirect('/deneb', 301);
+        });
     } else {
         $app->get('/', function($request, $response, $args) {
             return $this->view->render($response, 'firstrun.twig');
@@ -108,7 +114,7 @@
     }
 
     function loadPages() {
-      
+
     }
 
     function doAuthentication($loginDetails) {
