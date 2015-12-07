@@ -1,0 +1,40 @@
+{% extends "base.twig" %}
+
+{% block title %}{% endblock %}
+
+{% block head %}
+  {{ parent() }}
+{% endblock %}
+
+{% block content %}
+  <div class="all-50 push-center">
+    <div class="align-center">
+      <h1>deneb</h1>
+      <h4>Login</h4>
+    </div>
+
+    <form class="ink-form" action="auth" method="post">
+      <div class="column-group">
+        <div class="control-group">
+          <div class="column-group gutters">
+            <label for="username" class="all-30 align-right">Username</label>
+            <div class="control all-70">
+              <input id="username" name="username" type="text" />
+            </div>
+          </div>
+
+          <div class="column-group gutters">
+            <label for="password" class="all-30 align-right">Password</label>
+            <div class="control all-70">
+              <input id="password" name="password" type="password" />
+            </div>
+          </div>
+
+          <div class="column-group gutters">
+              <input type="submit" value="Submit" class="ink-button push-right" />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock %}
