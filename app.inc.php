@@ -42,6 +42,8 @@
                 if (!file_exists('pages')) {
                     mkdir('pages', 0755);
                 }
+                $nav = createNavigation(loadPages($this->pagePath));
+
                 return $this->view->render($response, 'admin.twig');
             } else {
                 return $this->view->render($response, 'login.twig');
@@ -113,8 +115,66 @@
         return true;
     }
 
-    function loadPages() {
+    function loadPages($path) {
+        $pages = array();
+        $exclude = [".DS_Store", ".", "..", "Desktop.ini", "Thumbs.db"];
 
+        $dir = new DirectoryIterator($path);
+        foreach ($dir as $file) {
+            if (!in_array($file->__toString(), $exclude)) {
+                if ($file->isFile()) {
+                    $pages[$file->getFilename()] = $file->getPathname();
+                } else if ($file->isDir()) {
+                    $pages[$file->getFilename()] = loadPages($file->getPathname());
+                }
+            }
+        }
+        return $pages;
+    }
+
+    function createRoutes($pages, $app) {
+        foreach ($pages as $page => $path) {
+            if (!is_array($path)) {
+                $app->get(substr($path, 5, -3), function($request, $response, $args) use ($path) {
+                    $contents = readContents($path);
+                    return $this->view->render($response, 'page.twig', [
+                        'contents' => $contents
+                    ]);
+                });
+            } else {
+                createRoutes($path, $app);
+            }
+        }
+    }
+
+    function createNavigation($pages) {
+        $pages = array();
+
+        foreach ($pages as $page => $path) {
+            if (!is_array($path)) {
+                $meta = readMeta($path);
+                $pages[$meta['title']] = $meta['category'];
+            } else {
+                $pages[$page] = createNavigation($path);
+            }
+        }
+        return $pages;
+    }
+
+    function readMeta($path) {
+        $fileContents = file_get_contents($path);
+        $contents = explode("--", $fileContents);
+        $pageMeta = json_decode(array_shift($contents), true);
+        return $pageMeta;
+    }
+
+    function readContents($path) {
+        $page = array();
+        $fileContents = file_get_contents($path);
+        $contents = explode("--", $fileContents);
+        $page['meta'] = json_decode(array_shift($contents), true);
+        $page['contents'] = implode($contents);
+        return $page;
     }
 
     function doAuthentication($loginDetails) {
