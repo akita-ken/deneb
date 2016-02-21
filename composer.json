@@ -9,6 +9,7 @@
         "slim/slim": "^3.0@RC",
         "slim/twig-view": "^2.0",
         "pear-pear.php.net/config_lite": "*",
-        "aura/session": "^2.0"
+        "aura/session": "^2.0",
+        "erusev/parsedown": "^1.6.0"
     }
 }
