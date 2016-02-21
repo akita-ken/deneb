@@ -1,11 +1,13 @@
+{% set asset_path = '/deneb/templates/assets' %}
+
 <!DOCTYPE html>
 <html>
   <head>
     {% block head %}
       <title>{% block title %}{% endblock %}</title>
 
-      <link rel="stylesheet" href="templates/assets/css/ink.min.css" />
-      <link rel="stylesheet" href="templates/assets/css/kennyl.css" />
+      <link rel="stylesheet" href="{{ asset_path }}/css/ink.min.css" />
+      <link rel="stylesheet" href="{{ asset_path }}/css/kennyl.css" />
     {% endblock %}
 
   </head>
