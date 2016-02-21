@@ -3,7 +3,7 @@
     $configuration = [
         'settings' => [
             'displayErrorDetails' => true,
-        ],
+        ]
     ];
 
     // Create container
@@ -26,6 +26,9 @@
 
         return $view;
     };
+
+    // Set page path
+    $container['pagePath'] = 'pages';
 
     // Create app
     $app = new \Slim\App($container);
