@@ -14,7 +14,7 @@
     $session = $session_factory->newInstance($_COOKIE);
 
     // Register component on container
-    $container['view'] = function ($c) {
+    $container['view'] = function($c) {
         $view = new \Slim\Views\Twig('templates', [
             'cache' => 'cache',
             'auto_reload' => 'false'
