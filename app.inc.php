@@ -30,8 +30,14 @@
     // Set page path
     $container['pagePath'] = 'pages';
 
+    // Start PHP session
+    session_start();
+
     // Create app
     $app = new \Slim\App($container);
+
+    // Add slim-csrf component to application middleware
+    $app->add(new \Slim\Csrf\Guard);
 
     // Render Twig template in route
     if (firstRunCheck()) {
@@ -40,18 +46,28 @@
         });
 
         $app->get('/admin', function($request, $response, $args) use ($session) {
-            $segment = $session->getSegment('deneb');
-            if ($segment->get('auth')) {
+            if (sessionCheck($session)) {
                 if (!file_exists('pages')) {
                     mkdir('pages', 0755);
                 }
-                $nav = createNavigation(loadPages($this->pagePath));
+                $navigation = createNavigation(loadPages($this->pagePath));
 
-                return $this->view->render($response, 'admin.twig');
+                return $this->view->render($response, 'admin.twig', [
+                    'flashSuccess' => $session->getSegment('deneb')->getFlash('flashSuccess'),
+                    'navigation' => $navigation
+                ]);
             } else {
-                return $this->view->render($response, 'login.twig');
+                return $response->withRedirect($this->router->pathFor('login'), 301);
             }
-        });
+        })->setName('admin');
+
+        $app->get('/login', function($request, $response, $args) {
+            // CSRF token name and value
+            return $this->view->render($response, 'login.twig', [
+                'name' => $request->getAttribute('csrf_name'),
+                'value' => $request->getAttribute('csrf_value')
+            ]);
+        })->setName('login');
 
         $app->post('/auth', function($request, $response, $args) use ($session) {
           $loginDetails = $request->getParsedBody();
