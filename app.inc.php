@@ -108,6 +108,18 @@
 
     $app->run();
 
+    function requiredValidation($input) {
+        if ($input == '' || $input == null) {
+            return false;
+        }
+        return true;
+    }
+
+    function sessionCheck($session) {
+        $segment = $session->getSegment('deneb');
+        return $segment->get('auth');
+    }
+
     function firstRunCheck() {
         static $configFileExists = false;
 
