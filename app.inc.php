@@ -80,6 +80,20 @@
           }
         });
 
+        $app->get('/admin/new', function($request, $response, $args) use ($session) {
+            if (sessionCheck($session)) {
+                $navigation = createNavigation(loadPages($this->pagePath));
+
+                return $this->view->render($response, 'new.twig', [
+                    'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
+                    'navigation' => $navigation,
+                    'name' => $request->getAttribute('csrf_name'),
+                    'value' => $request->getAttribute('csrf_value')
+                ]);
+            } else {
+                return $response->withRedirect($this->router->pathFor('login'), 301);
+            }
+        })->setName('new');
         $app->get('/logout', function($request, $response, $args) use ($session) {
           $session->destroy();
 
