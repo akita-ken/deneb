@@ -80,6 +80,32 @@
           }
         });
 
+        $app->post('/admin/create', function($request, $response, $args) use ($session) {
+            if (sessionCheck($session)) {
+                $pageData = $request->getParsedBody();
+                $content = array_pop($pageData);
+                $pageData = array_splice($pageData, 0, -2);
+                $segment = $session->getSegment('deneb');
+
+                if (requiredValidation($pageData['path'])) {
+                    $pageData['path'] = $this->pagePath . $pageData['path'] . '.md';
+                    $pageData['hash'] = hash('crc32b', $pageData['path']);
+                    writePage($pageData, $content);
+
+                    $segment->setFlash('flashSuccess', 'Page created successfully');
+                    $session->commit();
+                    return $response->withRedirect($this->router->pathFor('admin'), 301);
+                } else {
+                    $segment->set('createForm', $pageData);
+                    $segment->setFlash('flashError', 'Page path is a required field');
+
+                    $session->commit();
+                    return $response->withRedirect($this->router->pathFor('new'), 301);
+                }
+            } else {
+                return $response->withRedirect($this->router->pathFor('login'), 301);
+            }
+        });
         $app->get('/admin/new', function($request, $response, $args) use ($session) {
             if (sessionCheck($session)) {
                 $navigation = createNavigation(loadPages($this->pagePath));
