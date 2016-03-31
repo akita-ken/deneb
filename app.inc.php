@@ -219,17 +219,32 @@
     }
 
     function createNavigation($pages) {
-        $pages = array();
+        $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($pages));
+        $navigation = array();
 
-        foreach ($pages as $page => $path) {
-            if (!is_array($path)) {
-                $meta = readMeta($path);
-                $pages[$meta['title']] = $meta['category'];
+        foreach ($iterator as $leafKey => $leafValue) {
+            $keys = array();
+            $meta = readMeta($leafValue);
+
+            if ($iterator->getDepth() == 0) {
+                $navigation[$meta['linkname']] = $meta['category'] . ',' . $meta['hash'];
             } else {
-                $pages[$page] = createNavigation($path);
+                foreach (range(0, $iterator->getDepth() - 1) as $depth) {
+                    $keys[] = $iterator->getSubIterator($depth)->key();
+                }
+
+                $path = '/'.join('/', $keys);
+
+                if (array_key_exists($path, $navigation)) {
+                    $navigation[$path][$meta['linkname']] = $meta['category']. ',' . $meta['hash'];
+                } else {
+                    $navigation[$path] = array();
+                    $navigation[$path][$meta['linkname']] = $meta['category']. ',' . $meta['hash'];
+                }
             }
         }
-        return $pages;
+        return $navigation;
+    }
     }
 
     function readMeta($path) {
