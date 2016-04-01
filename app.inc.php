@@ -245,6 +245,13 @@
         }
         return $navigation;
     }
+    function writePage($pageData, $content) {
+        $file = fopen($pageData['path'], 'w');
+        array_shift($pageData);
+        $pageData = json_encode($pageData, JSON_PRETTY_PRINT);
+        $page = $pageData . "\r\n\r\n--\r\n" . $content;
+        fwrite($file, $page);
+        fclose($file);
     }
 
     function readMeta($path) {
