@@ -258,6 +258,10 @@
         $fileContents = file_get_contents($path);
         $contents = explode("--", $fileContents);
         $pageMeta = json_decode(array_shift($contents), true);
+
+        if (empty($pageMeta['category'])) {
+            $pageMeta['category'] = "Uncategorised";
+        }
         return $pageMeta;
     }
 
