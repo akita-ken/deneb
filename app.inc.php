@@ -80,6 +80,30 @@
           }
         });
 
+        $app->get('/admin/edit/{hash}', function($request, $response, $args) use ($session) {
+            if (sessionCheck($session)) {
+                $navigation = createNavigation(loadPages($this->pagePath));
+                $reverseNavigation = createReverseNavigation(loadPages($this->pagePath));
+                $page = readPage($reverseNavigation[$args['hash']]);
+
+                $segment = $session->getSegment('deneb');
+                $segment->setFlash('path', $reverseNavigation[$args['hash']]);
+                $flashError = $segment->getFlash('flashError');
+                $session->commit();
+
+                return $this->view->render($response, 'edit.twig', [
+                    'hash' => $args['hash'],
+                    'navigation' => $navigation,
+                    'flashError' => $flashError,
+                    'path' => substr(str_replace($this->pagePath, '', $reverseNavigation[$args['hash']]), 0, -3),
+                    'page' => $page,
+                    'name' => $request->getAttribute('csrf_name'),
+                    'value' => $request->getAttribute('csrf_value')
+                ]);
+            } else {
+                return $response->withRedirect($this->router->pathFor('login'), 301);
+            }
+        })->setName('edit');
         $app->post('/admin/update', function($request, $response, $args) use ($session) {
             if (sessionCheck($session)) {
                 $segment = $session->getSegment('deneb');
