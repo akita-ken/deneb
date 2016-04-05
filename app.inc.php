@@ -158,6 +158,26 @@
                 return $response->withRedirect($this->router->pathFor('login'), 301);
             }
         })->setName('new');
+        $app->get('/admin/delete/{hash}', function($request, $response, $args) use ($session) {
+            if (sessionCheck($session)) {
+                $segment = $session->getSegment('deneb');
+                $reverseNavigation = createReverseNavigation(loadPages($this->pagePath));
+
+                if(!unlink($reverseNavigation[$args['hash']])) {
+                    $segment->setFlash('flashError', 'Unable to remove old file:' . $currentPath);
+                    $session->commit();
+                    return $response->withRedirect($this->router->pathFor('edit', [
+                        'hash' => $pageData['hash']
+                    ]), 301);
+                } else {
+                    $segment->setFlash('flashSuccess', 'Page deleted successfully');
+                    $session->commit();
+                    return $response->withRedirect($this->router->pathFor('admin'), 301);
+                }
+            } else {
+                return $response->withRedirect($this->router->pathFor('login'), 301);
+            }
+        });
         $app->get('/logout', function($request, $response, $args) use ($session) {
           $session->destroy();
 
