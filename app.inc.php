@@ -327,6 +327,19 @@
         }
         return $navigation;
     }
+
+    function createReverseNavigation($pages) {
+        $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($pages));
+        $reverseNavigation = array();
+
+        foreach ($iterator as $leafKey => $leafValue) {
+            $keys = array();
+            $meta = readMeta($leafValue);
+            $reverseNavigation[$meta['hash']] = $leafValue;
+        }
+        return $reverseNavigation;
+    }
+
     function writePage($pageData, $content) {
         $file = fopen($pageData['path'], 'w');
         array_shift($pageData);
