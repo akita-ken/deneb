@@ -80,6 +80,44 @@
           }
         });
 
+        $app->post('/admin/update', function($request, $response, $args) use ($session) {
+            if (sessionCheck($session)) {
+                $segment = $session->getSegment('deneb');
+                $currentPath = $segment->getFlash('path');
+
+                $pageData = $request->getParsedBody();
+                $content = array_pop($pageData);
+                $pageData = array_splice($pageData, 0, -2);
+
+                if (requiredValidation($pageData['path'])) {
+                    $pageData['path'] = $this->pagePath . $pageData['path'] . '.md';
+                    $pageData['hash'] = hash('crc32b', $pageData['path']);
+
+                    if ($currentPath != $pageData['path']) {
+                        if(!unlink($currentPath)) {
+                            $segment->setFlash('flashError', 'Unable to remove old file:' . $currentPath);
+                            $session->commit();
+                            return $response->withRedirect($this->router->pathFor('edit', [
+                                'hash' => $pageData['hash']
+                            ]), 301);
+                        }
+                    }
+                    writePage($pageData, $content);
+
+                    $segment->setFlash('flashSuccess', 'Page edited successfully');
+                    $session->commit();
+                    return $response->withRedirect($this->router->pathFor('admin'), 301);
+                } else {
+                    $segment->setFlash('flashError', 'Page path is a required field');
+                    $session->commit();
+                    return $response->withRedirect($this->router->pathFor('edit', [
+                        'hash' => $pageData['hash']
+                    ]), 301);
+                }
+            } else {
+                return $response->withRedirect($this->router->pathFor('login'), 301);
+            }
+        });
         $app->post('/admin/create', function($request, $response, $args) use ($session) {
             if (sessionCheck($session)) {
                 $pageData = $request->getParsedBody();
