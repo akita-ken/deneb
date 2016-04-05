@@ -360,7 +360,7 @@
         return $pageMeta;
     }
 
-    function readContents($path) {
+    function readPage($path) {
         $page = array();
         $fileContents = file_get_contents($path);
         $contents = explode("--", $fileContents);
