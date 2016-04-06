@@ -76,7 +76,7 @@
             $segment->set('username', $loginDetails['username']);
             $segment->set('auth', true);
 
-            return $response->withRedirect('/deneb/admin', 301);
+            return $response->withRedirect($this->router->pathFor('admin'), 301);
           }
         });
 
