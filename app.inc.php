@@ -75,6 +75,7 @@
             $segment = $session->getSegment('deneb');
             $segment->set('username', $loginDetails['username']);
             $segment->set('auth', true);
+            $session->commit();
 
             return $response->withRedirect($this->router->pathFor('admin'), 301);
           }
