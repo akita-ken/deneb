@@ -54,6 +54,7 @@
 
                 return $this->view->render($response, 'admin.twig', [
                     'flashSuccess' => $session->getSegment('deneb')->getFlash('flashSuccess'),
+                    'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
                     'navigation' => $navigation
                 ]);
             } else {
