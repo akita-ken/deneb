@@ -286,11 +286,14 @@
     }
 
     function createRoutes($pages, $app) {
+        $navigation = createNavigation($pages);
+
         foreach ($pages as $page => $path) {
             if (!is_array($path)) {
-                $app->get(substr($path, 5, -3), function($request, $response, $args) use ($path) {
-                    $contents = readContents($path);
+                $app->get(substr($path, 5, -3), function($request, $response, $args) use ($path, $navigation) {
+                    $contents = readPage($path);
                     return $this->view->render($response, 'page.twig', [
+                        'navigation' => $navigation,
                         'contents' => $contents
                     ]);
                 });
