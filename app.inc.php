@@ -104,6 +104,7 @@
                 return $response->withRedirect($this->router->pathFor('login'), 301);
             }
         })->setName('edit');
+
         $app->post('/admin/update', function($request, $response, $args) use ($session) {
             if (sessionCheck($session)) {
                 $segment = $session->getSegment('deneb');
@@ -142,6 +143,7 @@
                 return $response->withRedirect($this->router->pathFor('login'), 301);
             }
         });
+
         $app->post('/admin/create', function($request, $response, $args) use ($session) {
             if (sessionCheck($session)) {
                 $pageData = $request->getParsedBody();
@@ -168,6 +170,7 @@
                 return $response->withRedirect($this->router->pathFor('login'), 301);
             }
         });
+
         $app->get('/admin/new', function($request, $response, $args) use ($session) {
             if (sessionCheck($session)) {
                 $navigation = createNavigation(loadPages($this->pagePath));
@@ -182,6 +185,7 @@
                 return $response->withRedirect($this->router->pathFor('login'), 301);
             }
         })->setName('new');
+
         $app->get('/admin/delete/{hash}', function($request, $response, $args) use ($session) {
             if (sessionCheck($session)) {
                 $segment = $session->getSegment('deneb');
