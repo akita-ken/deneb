@@ -213,6 +213,9 @@
 
           return $response->withRedirect('/deneb', 301);
         });
+
+        createRoutes(loadPages($app->getContainer()->pagePath), $app);
+
     } else {
         $app->get('/', function($request, $response, $args) {
             return $this->view->render($response, 'firstrun.twig');
