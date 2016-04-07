@@ -227,6 +227,7 @@
                 $segment = $session->getSegment('deneb');
                 $segment->set('username', $userDetails['username']);
                 $segment->set('auth', true);
+                $session->commit();
 
                 return $response->withRedirect('/deneb/admin', 301);
             } else {
