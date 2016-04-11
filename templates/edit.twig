@@ -1,0 +1,52 @@
+{% extends "new.twig" %}
+
+{% block title %}{% endblock %}
+
+
+{% block header %}
+    Edit page
+{% endblock %}
+
+{% block formAction %}
+  /deneb/admin/update
+{% endblock %}
+
+{% block pathValue %}
+  value="{{ path }}"
+{% endblock %}
+
+{% block linknameValue %}
+  value="{{ page['meta']['linkname'] }}"
+{% endblock %}
+
+{% block titleValue %}
+  value="{{ page['meta']['title'] }}"
+{% endblock %}
+
+{% block headerValue %}
+  value="{{ page['meta']['header'] }}"
+{% endblock %}
+
+{% block dateValue %}
+  value="{{ page['meta']['date'] }}"
+{% endblock %}
+
+{% block descriptionValue %}
+  value="{{ page['meta']['description'] }}"
+{% endblock %}
+
+{% block categoryValue %}
+  value="{{ page['meta']['category'] }}"
+{% endblock %}
+
+{% block displayDateTrue %}
+  {% if page['meta']['displaydate'] == 'true' %}checked="checked"{% endif %}
+{% endblock %}
+
+{% block displayDateFalse %}
+  {% if page['meta']['displaydate'] == 'false' %}checked="checked"{% endif %}
+{% endblock %}
+
+{% block contents %}
+  {{ page['contents'] }}
+{% endblock %}
