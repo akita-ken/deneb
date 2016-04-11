@@ -1,0 +1,116 @@
+{% extends "admin.twig" %}
+
+{% block title %}{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ asset_path }}/css/codemirror.css">
+  <link rel="stylesheet" href="{{ asset_path }}/css/mirrormark.css">
+
+  <script src="{{ asset_path }}/js/codemirror.package.min.js"></script>
+  <script src="{{ asset_path }}/js/lodash.min.js"></script>
+  <script src="{{ asset_path }}/js/mirrormark.min.js"></script>
+  <script>
+    $(function() {
+      var editor = mirrorMark(document.getElementById("content"), {
+        showToolbar: true
+      });
+      editor.render();
+
+      $('.CodeMirror').on('click', function(e) {
+
+      });
+  });
+  </script>
+{% endblock %}
+
+{% block main %}
+  <h1 class="quarter-left-space half-vertical-space">{% block header %} New page {% endblock %}</h1>
+
+  {% if flashError is not null %}
+    <div class="column-group half-space">
+      <div class="ink-alert basic error" role="alert">
+        <button class="ink-dismiss">&times;</button>
+        <p>{{ flashError }}</p>
+      </div>
+    </div>
+  {% endif %}
+
+  <form action="{% block formAction %}/deneb/admin/create{% endblock %}" method="post" class="ink-form">
+    <div class="control-group column-group quarter-gutters required">
+        <label for="path" class="all-20 align-right">Path</label>
+        <div class="control all-40">
+          <input type="text" name="path" id="path" {% block pathValue %}{% endblock %} />
+        </div>
+    </div>
+
+    <div class="control-group column-group quarter-gutters required">
+        <label for="linkname" class="all-20 align-right">Linkname</label>
+        <div class="control all-40">
+          <input type="text" name="linkname" id="linkname" {% block linknameValue %}{% endblock %} />
+        </div>
+    </div>
+
+    <div class="control-group column-group quarter-gutters">
+      <label for="title" class="all-20 align-right">Title</label>
+      <div class="control all-40">
+        <input type="text" name="title" id="title" {% block titleValue %}{% endblock %} />
+      </div>
+    </div>
+
+    <div class="control-group column-group quarter-gutters">
+      <label for="header" class="all-20 align-right">Header</label>
+      <div class="control all-40">
+        <input type="text" name="header" id="header" {% block headerValue %}{% endblock %} />
+      </div>
+    </div>
+
+    <div class="control-group column-group quarter-gutters">
+      <label for="date" class="all-20 align-right">Date</label>
+      <div class="control all-40">
+        <input type="date" name="date" id="date" {% block dateValue %}{% endblock %} />
+      </div>
+    </div>
+
+    <div class="control-group column-group quarter-gutters">
+      <label for="description" class="all-20 align-right">Description</label>
+      <div class="control all-40">
+        <input type="text" name="description" id="description" {% block descriptionValue %}{% endblock %} />
+      </div>
+    </div>
+
+    <div class="control-group column-group quarter-gutters">
+      <label for="category" class="all-20 align-right">Category</label>
+      <div class="control all-40">
+        <input type="text" name="category" id="category" {% block categoryValue %}{% endblock %} />
+      </div>
+    </div>
+
+    <div class="control-group column-group quarter-gutters">
+      <p class="label all-20 align-right">Display date?</p>
+      <ul class="control unstyled all-40 inline no-top-margin quarter-horizontal-space">
+        <li><input type="radio" id="yes" name="displaydate" value="true"><label for="yes" {% block displayDateTrue %}{% endblock %}>Yes</label></li>
+        <li><input type="radio" id="no" name="displaydate" value="false"><label for="no" {% block displayDateFalse %}{% endblock %}>No</label></li>
+      </ul>
+    </div>
+
+    <input type="hidden" name="csrf_name" value="{{ name }}" />
+    <input type="hidden" name="csrf_value" value="{{ value }}" />
+
+    <div class="control-group column-group quarter-gutters">
+      <div class="all-90 push-center">
+        <label for="content">Content</label>
+        <div class="control">
+          <textarea id="content" name="content">{% block contents %}{% endblock %}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="column-group quarter-gutters">
+      <div class="all-90">
+        <button class="ink-button green push-right">Submit</a>
+      </div>
+    </div>
+
+
+  </form>
+{% endblock %}
