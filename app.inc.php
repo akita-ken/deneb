@@ -27,6 +27,9 @@
         return loadPageTemplates($c['templatePath']);
     };
 
+    // Set default template
+    $container['template'] = 'deneb';
+
     // Register component on container
     $container['view'] = function($c) {
         $view = new \Slim\Views\Twig('templates', [
