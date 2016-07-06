@@ -346,6 +346,16 @@
         return true;
     }
 
+    function configInit() {
+        $config = new Config_Lite('config.ini');
+
+        $config->set('application', 'template', 'deneb');
+
+        $config->save();
+
+        return true;
+    }
+
     function loadPages($path) {
         $pages = array();
         $exclude = [".DS_Store", ".", "..", "Desktop.ini", "Thumbs.db"];
