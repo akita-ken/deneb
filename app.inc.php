@@ -27,6 +27,9 @@
         return loadPageTemplates($c['templatePath']);
     };
 
+    // Set page path
+    $container['pagePath'] = 'pages';
+
     // Set default template
     $container['template'] = 'deneb';
 
