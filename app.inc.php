@@ -16,6 +16,9 @@
     $session_factory = new \Aura\Session\SessionFactory;
     $session = $session_factory->newInstance($_COOKIE);
 
+    // Create Markdown engine
+    $container['engine'] = new MarkdownEngine\MichelfMarkdownEngine();
+
     // Register component on container
     $container['view'] = function($c) {
         $view = new \Slim\Views\Twig('templates', [
