@@ -1,5 +1,8 @@
 <?php
 
+    use Aptoma\Twig\Extension\MarkdownExtension;
+    use Aptoma\Twig\Extension\MarkdownEngine;
+
     $configuration = [
         'settings' => [
             'displayErrorDetails' => true,
