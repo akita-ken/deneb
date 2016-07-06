@@ -31,6 +31,7 @@
             $c['router'],
             $c['request']->getUri()
         ));
+        $view->addExtension(new MarkdownExtension($c['engine']));
 
         return $view;
     };
