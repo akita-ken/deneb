@@ -106,6 +106,7 @@
         $app->get('/login', function($request, $response, $args) {
             // CSRF token name and value
             return $this->view->render($response, 'login.twig', [
+                'templatePath' => $this->templatePath,
                 'name' => $request->getAttribute('csrf_name'),
                 'value' => $request->getAttribute('csrf_value')
             ]);
@@ -140,6 +141,8 @@
                     'flashError' => $flashError,
                     'path' => substr(str_replace($this->pagePath, '', $reverseNavigation[$args['hash']]), 0, -3),
                     'page' => $page,
+                    'templates' => $this->pageTemplates,
+                    'templatePath' => $this->templatePath,
                     'name' => $request->getAttribute('csrf_name'),
                     'value' => $request->getAttribute('csrf_value')
                 ]);
@@ -221,6 +224,8 @@
                 return $this->view->render($response, 'new.twig', [
                     'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
                     'navigation' => $navigation,
+                    'templatePath' => $this->templatePath,
+                    'templates' => $this->pageTemplates,
                     'name' => $request->getAttribute('csrf_name'),
                     'value' => $request->getAttribute('csrf_value')
                 ]);
