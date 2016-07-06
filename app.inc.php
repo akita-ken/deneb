@@ -201,7 +201,7 @@
                     $pageData['hash'] = hash('crc32b', $pageData['path']);
 
                     if ($currentPath != $pageData['path']) {
-                        if(!unlink($currentPath)) {
+                        if (!unlink($currentPath)) {
                             $segment->setFlash('flashError', 'Unable to remove old file:' . $currentPath);
                             $session->commit();
                             return $response->withRedirect($this->router->pathFor('edit', [
@@ -275,7 +275,7 @@
                 $segment = $session->getSegment('deneb');
                 $reverseNavigation = createReverseNavigation(loadPages($this->pagePath));
 
-                if(!unlink($reverseNavigation[$args['hash']])) {
+                if (!unlink($reverseNavigation[$args['hash']])) {
                     $segment->setFlash('flashError', 'Unable to remove old file:' . $currentPath);
                     $session->commit();
                     return $response->withRedirect($this->router->pathFor('edit', [
