@@ -428,6 +428,27 @@
         }
         return $templates;
     }
+
+    function loadPageTemplates($path) {
+        $templates = array();
+        $exclude = [".DS_Store", ".", "..", "Desktop.ini", "Thumbs.db", "admin.twig", "base.twig", "edit.twig", "login.twig", "new.twig", "firstrun.twig"];
+
+        $dir = new DirectoryIterator($path);
+
+        foreach ($dir as $file) {
+            if (!in_array($file, $exclude)) {
+                if ($file->isFile()) {
+                    if ($file == 'page.twig') {
+                        $templates['default'] = $file->getFilename();
+                    } else {
+                        $templates[substr($file, 0, -5)] = $file->getFilename;
+                    }
+                }
+            }
+        }
+        return $templates;
+    }
+
     function createRoutes($pages, $app) {
         $navigation = createNavigation($pages);
 
