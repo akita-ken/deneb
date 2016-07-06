@@ -260,6 +260,23 @@
                 return $response->withRedirect($this->router->pathFor('login'), 301);
             }
         });
+
+        $app->get('/admin/template/new', function($request, $response, $args) use ($session) {
+            if (sessionCheck($session)) {
+                $navigation = createNavigation(loadPages($this->pagePath));
+
+                return $this->view->render($response, 'new-template.twig', [
+                    'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
+                    'navigation' => $navigation,
+                    'templatePath' => $this->templatePath,
+                    'name' => $request->getAttribute('csrf_name'),
+                    'value' => $request->getAttribute('csrf_value')
+                ]);
+            } else {
+                return $response->withRedirect($this->router->pathFor('login'), 301);
+            }
+        })->setName('new_template');
+
         $app->get('/logout', function($request, $response, $args) use ($session) {
           $session->destroy();
 
