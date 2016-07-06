@@ -78,8 +78,14 @@
 
                 return $this->view->render($response, 'admin.twig', [
                     'flashSuccess' => $session->getSegment('deneb')->getFlash('flashSuccess'),
+                    'flashWarn' => $session->getSegment('deneb')->getFlash('flashWarn'),
                     'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
-                    'navigation' => $navigation
+                    'templates' => $container['templates'],
+                    'navigation' => $navigation,
+                    'activeTemplate' => $this->template,
+                    'templatePath' => $this->templatePath,
+                    'name' => $request->getAttribute('csrf_name'),
+                    'value' => $request->getAttribute('csrf_value')
                 ]);
             } else {
                 return $response->withRedirect($this->router->pathFor('login'), 301);
