@@ -394,6 +394,40 @@
         return $pages;
     }
 
+    function loadTemplates($path = 'templates', $depth = 0) {
+        $templates = array();
+        $exclude = [".DS_Store", ".", "..", "Desktop.ini", "Thumbs.db"];
+        $required = ["admin.twig", "base.twig", "edit.twig", "login.twig", "new.twig", "page.twig"];
+
+        $dir = new DirectoryIterator($path);
+
+        if ($depth == 0) {
+            foreach ($dir as $file) {
+                if (!in_array($file, $exclude)) {
+                    if ($file->isDir()) {
+                        $templates[$file->getFilename()] = loadTemplates($file->getPathname(), $depth + 1);
+                    }
+                }
+            }
+        } else if ($depth == 1) {
+            $dirList = array();
+
+            foreach ($dir as $file) {
+                $dirList[] = $file->getFilename();
+            }
+
+            foreach ($required as $templateFile) {
+                if (!in_array($templateFile, $dirList)) {
+                    return false; // incomplete template, suppress path so it can't be used
+                }
+            }
+
+            if (is_array($templates)) {
+                $templates = $path;
+            }
+        }
+        return $templates;
+    }
     function createRoutes($pages, $app) {
         $navigation = createNavigation($pages);
 
