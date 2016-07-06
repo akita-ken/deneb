@@ -324,11 +324,14 @@
 
         $app->post('/firstRun', function($request, $response, $args) use ($session) {
             $userDetails = $request->getParsedBody();
-            if(createAdminUser($userDetails)) {
+            if (createAdminUser($userDetails) && configInit()) {
                 $segment = $session->getSegment('deneb');
                 $segment->set('username', $userDetails['username']);
                 $segment->set('auth', true);
                 $session->commit();
+
+                // set the active template
+                $container['template'] = 'deneb';
 
                 return $response->withRedirect('/deneb/admin', 301);
             } else {
