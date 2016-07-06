@@ -11,6 +11,8 @@
         "pear-pear.php.net/config_lite": "*",
         "aura/session": "^2.0",
         "erusev/parsedown": "^1.6.0",
-        "slim/csrf": "^0.6.0"
+        "slim/csrf": "^0.6.0",
+        "aptoma/twig-markdown": "~2.0",
+        "michelf/php-markdown": "~1.3"
     }
 }
