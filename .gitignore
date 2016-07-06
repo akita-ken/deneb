@@ -1,5 +1,9 @@
 # Created by https://www.gitignore.io/api/phpstorm,sublimetext,windows,osx,composer
 
+### deneb Pages ###
+pages/*
+!pages/index.md
+
 ### Twig PHP ###
 cache/
 
