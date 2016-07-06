@@ -40,7 +40,7 @@
 
     // Register component on container
     $container['view'] = function($c) {
-        $view = new \Slim\Views\Twig('templates', [
+        $view = new \Slim\Views\Twig($c['templatePath'], [
             'cache' => 'cache',
             'auto_reload' => 'false'
         ]);
