@@ -287,7 +287,9 @@
 
     } else {
         $app->get('/', function($request, $response, $args) {
-            return $this->view->render($response, 'firstrun.twig');
+            return $this->view->render($response, 'firstrun.twig', [
+                'templatePath' => $this->templatePath
+            ]);
         });
 
         $app->post('/firstRun', function($request, $response, $args) use ($session) {
@@ -300,7 +302,9 @@
 
                 return $response->withRedirect('/deneb/admin', 301);
             } else {
-                return $this->view->render($response, 'error.twig');
+                return $this->view->render($response, 'error.twig', [
+                    'templatePath' => $this->templatePath
+                ]);
             }
         });
     }
