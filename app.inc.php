@@ -86,6 +86,23 @@
             }
         })->setName('admin');
 
+        $app->post('/admin', function($request, $response, $args) use ($session) {
+            if (sessionCheck($session)) {
+                $config = new Config_Lite('config.ini', LOCK_EX);
+                $settings = $request->getParsedBody();
+                if ($settings['template'] != $this->template) {
+                    $container['template'] = $settings['template'];
+
+                    $config->set('application', 'template', $settings['template']);
+                }
+
+                $config->save();
+                return $response->withRedirect($this->router->pathFor('admin'), 301);
+            } else {
+                return $response->withRedirect($this->router->pathFor('login'), 301);
+            }
+        });
+
         $app->get('/login', function($request, $response, $args) {
             // CSRF token name and value
             return $this->view->render($response, 'login.twig', [
