@@ -19,6 +19,8 @@
     // Create Markdown engine
     $container['engine'] = new MarkdownEngine\MichelfMarkdownEngine();
 
+    // Load site templates
+    $container['templates'] = loadTemplates();
     // Register component on container
     $container['view'] = function($c) {
         $view = new \Slim\Views\Twig('templates', [
