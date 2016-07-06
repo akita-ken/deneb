@@ -21,6 +21,12 @@
 
     // Load site templates
     $container['templates'] = loadTemplates();
+
+    // Load page templates
+    $container['pageTemplates'] = function($c) {
+        return loadPageTemplates($c['templatePath']);
+    };
+
     // Register component on container
     $container['view'] = function($c) {
         $view = new \Slim\Views\Twig('templates', [
