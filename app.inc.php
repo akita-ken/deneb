@@ -317,6 +317,22 @@
         }
     }
 
+    function setConfig($session) {
+        $config = new Config_Lite('config.ini', LOCK_EX);
+
+        $template = $config->get('application', 'template', false);
+
+        if ($template == false) {
+            $segment = $session->getSegment('deneb');
+            $segment->set('persistentWarn', '<li>The template setting in your config.ini could not be found. Default template (\'deneb\') has been set.</li>');
+
+            $config->set('application', 'template', 'deneb');
+            $config->save();
+        } else {
+            $container['template'] = $template;
+        }
+    }
+
     function createAdminUser($userDetails) {
         $config = new Config_Lite('config.ini');
 
