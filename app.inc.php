@@ -150,6 +150,13 @@
             $session->commit();
 
             return $response->withRedirect($this->router->pathFor('admin'), 301);
+          } else {
+            $segment = $session->getSegment('deneb');
+            $segment->setFlash('flashError', "Authentication failed");
+            $segment->set('auth', false);
+            $session->commit();
+
+            return $response->withRedirect($this->router->pathFor('login'), 301);
           }
         });
 
