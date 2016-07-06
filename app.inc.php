@@ -307,6 +307,18 @@
             }
         })->setName('new_template');
 
+        $app->get('/listpages', function($request, $response, $args) {
+            $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator(loadPages($this->pagePath)));
+            $reverseNavigation = array();
+
+            foreach ($iterator as $leafKey => $leafValue) {
+                $keys = array();
+                $meta = readMeta($leafValue);
+                $reverseNavigation[$meta['hash']] = realpath($leafValue);
+            }
+            var_dump($reverseNavigation);
+        });
+
         $app->get('/logout', function($request, $response, $args) use ($session) {
           $session->destroy();
 
