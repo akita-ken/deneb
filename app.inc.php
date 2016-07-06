@@ -53,9 +53,6 @@
         return $view;
     };
 
-    // Set page path
-    $container['pagePath'] = 'pages';
-
     // Start PHP session
     session_start();
 
