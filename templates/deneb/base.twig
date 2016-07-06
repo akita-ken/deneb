@@ -1,4 +1,4 @@
-{% set asset_path = '/deneb/templates/assets' %}
+{% set asset_path = '/deneb/' ~ templatePath ~ '/assets' %}
 
 <!DOCTYPE html>
 <html>
@@ -7,6 +7,7 @@
 
       <link rel="stylesheet" href="{{ asset_path }}/css/ink.min.css" />
       <link rel="stylesheet" href="{{ asset_path }}/css/font-awesome.min.css" />
+      <link rel="stylesheet" href="{{ asset_path }}/css/deneb.css" />
       <link rel="stylesheet" href="{{ asset_path }}/css/kennyl.css" />
 
       <script src="{{ asset_path }}/js/jquery-2.2.0.min.js"></script>

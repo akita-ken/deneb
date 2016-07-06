@@ -21,50 +21,51 @@
 
 .wrap {
   min-height: 100%;
-  height: auto !important;
+  /*height: auto !important;*/
   height: 100%;
   margin: 0 auto -120px;
-  overflow: auto;
 }
 
 .top-menu {
+  z-index: 1;
+  width: 100%;
+  height: 56px;
+  position: fixed;
   background: #1a1a1a;
 }
 
 .ink-navigation ul.menu.horizontal li a {
-  padding: 14px 20px;
+  padding: 0.75em 1em;
 }
 
 html, body {
   height: 100%;
 }
 
-#kennyl {
-  font-family: 'NotoSans';
-  font-size: 24px;
-  font-weight: 400;
-  text-shadow: 0px 1px 1px #006699;
-}
-
-#kennyl a {
-  padding: 8px 16px;
-}
-
 #sidebar {
   background-color: #333;
   color: #fff;
-  padding: 10px;
   height: 100%;
-  position: absolute;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  overflow: scroll;
+}
+
+#mainarea {
+  position: relative;
+  top: 56px;
+  height: 100%;
 }
 
 #mainpanel {
   float: right;
-  padding: 10px 25px;
+  padding: 20px 25px;
   margin: 0;
 }
 
 .sidebar-header {
+  color: #999;
   padding: 20px 20px 10px;
 }
 
@@ -81,14 +82,29 @@ html, body {
   background-color: #666;
   text-decoration: none;
 }
+
+#content {
+  border-color: #999;
+  border-style: solid;
+  border-width: 1px;
+}
+
+/* ink overrides */
+
+.permanently-open {
+  display: block !important;
+}
+
+/* utility classes */
+
 .borderless-grid {
   padding: 0;
 }
 
-.darkBlue {
-  color: #00aadd;
+.right {
+  float: right !important;
 }
 
-.lightBlue {
-  color: #99ccff;
+.no-top-margin {
+  margin-top: 0;
 }

@@ -2,16 +2,12 @@
 
 {% block title %}{% endblock %}
 
-{% block head %}
-  {{ parent() }}
-{% endblock %}
-
 {% block nav %}
 
 <div class="top-menu">
   <nav class="ink-navigation ink-grid">
     <ul class="menu horizontal black">
-      <li id="kennyl"><a href="http://kennyl.im"><span class="darkBlue">kennyl</span><span class="lightBlue">.im</span></a></li>
+      <li id="kennyl"><a href="/deneb"><span class="darkBlue">kennyl</span><span class="lightBlue">.im</span></a></li>
       {% block navmenu %}
       {% endblock %}
     </ul>
@@ -21,5 +17,7 @@
 {% endblock %}
 
 {% block content %}
-  
+
+  {{ contents | markdown }}
+
 {% endblock %}

@@ -1,0 +1,120 @@
+{% extends "page.twig" %}
+
+{% block title %}{% endblock %}
+
+{% block navmenu %}
+  <li class="right"><a href="/deneb/logout">Logout</a></li>
+{% endblock %}
+
+{% block content %}
+  <div class="ink-grid borderless-grid">
+    <div class="column-group" id="mainarea">
+
+      {% block sidebar %}
+        <div id="sidebar" class="all-30">
+          <div class="column-group">
+            <a class="menu-button large" href="/deneb/admin">Administration</a>
+          </div>
+          <div class="column-group">
+            <a class="menu-button large" href="/deneb/admin/stats">Stats</a>
+          </div>
+          <div class="column-group">
+            <div class="all-70">
+              <div class="sidebar-header large">Pages</div>
+            </div>
+            <div class="all-30">
+              <a href="/deneb/admin/new" class="ink-button green half-vertical-space push-right half-right-space">New page</a>
+            </div>
+          </div>
+          <nav class="ink-navigation">
+            <ul class="menu vertical black">
+              {% for linkname, category in navigation %}
+                {% if category is iterable %}
+                  <li class="heading">
+                    <a href="#">{{ linkname }}</a>
+                    <ul class="submenu permanently-open">
+                      {% for linkname, category2 in category %}
+                        {% set attr = category2 | split(',') %}
+                        <li><a href="/deneb/admin/edit/{{ attr[1] }}">{{ linkname }}<span class="ink-badge grey {{ category2 | lower }}-badge push-right">{{ attr[0] }}</span></a></li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                {% else %}
+                  {% set attr = category | split(',') %}
+                  <li>
+                    <a href="/deneb/admin/edit/{{ attr[1] }}">{{ linkname }}<span class="ink-badge grey {{ category | lower }}-badge push-right">{{ attr[0] }}</span></a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </nav>
+          <div class="column-group">
+            <div class="all-60">
+              <div class="sidebar-header large">Templates</div>
+            </div>
+            <div class="all-40">
+              <a href="/deneb/admin/templates/new" class="ink-button green half-vertical-space push-right half-right-space">New template file</a>
+            </div>
+          </div>
+          <nav class="ink-navigation">
+          </nav>
+        </div>
+      {% endblock %}
+
+      <div id="mainpanel" class="all-70">
+        {% block main %}
+          <h1>Administration</h1>
+          {% if flashSuccess is not null %}
+            <div class="column-group half-space">
+              <div class="ink-alert basic success" role="alert">
+                <button class="ink-dismiss">&times;</button>
+                <p>{{ flashSuccess }}</p>
+              </div>
+            </div>
+          {% endif %}
+          {% if flashError is not null %}
+            <div class="column-group half-space">
+              <div class="ink-alert basic error" role="alert">
+                <button class="ink-dismiss">&times;</button>
+                <p>{{ flashError }}</p>
+              </div>
+            </div>
+          {% endif %}
+          {% if flashWarn is not null and flashWarn %}
+            <div class="column-group half-space">
+              <div class="ink-alert basic warning" role="alert">
+                <button class="ink-dismiss">&times;</button>
+                <ul>{{ flashWarn | raw }}</ul>
+              </div>
+            </div>
+          {% endif %}
+
+          <form action="/deneb/admin" method="post" class="ink-form right-space">
+            <div class="control-group column-group gutters">
+              <label for="active-template" class="all-20 align-right">Active template</label>
+              <div class="control all-30">
+                <select name="template">
+                  {% for template in templates|keys %}
+                    <option value="{{ template | lower }}" 
+                      {% if template == activeTemplate %}
+                        selected
+                      {% endif %}
+                    >{{ template }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <input type="hidden" name="csrf_name" value="{{ name }}" />
+            <input type="hidden" name="csrf_value" value="{{ value }}" />
+
+            <input type="submit" value="Update" class="ink-button blue push-right">
+          </form>
+
+
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -37,7 +37,7 @@
 
   <form action="{% block formAction %}/deneb/admin/create{% endblock %}" method="post" class="ink-form">
     <div class="control-group column-group quarter-gutters required">
-        <label for="path" class="all-20 align-right">Path</label>
+        <label for="path" class="all-20 align-right">URL Path</label>
         <div class="control all-40">
           <input type="text" name="path" id="path" {% block pathValue %}{% endblock %} />
         </div>
@@ -86,8 +86,18 @@
     </div>
 
     <div class="control-group column-group quarter-gutters">
+      <p class="label all-20 align-right">Page template</p>
+      <select class="control all-20 inline quarter-horizontal-space no-top-margin" name="template">
+        {% for template in templates|keys %}
+          <option value="{{ template }}" 
+            {% if template == activeTemplate %}
+              selected
+            {% endif %}
+          >{{ template }}</option>
+        {% endfor %}
+      </select>
       <p class="label all-20 align-right">Display date?</p>
-      <ul class="control unstyled all-40 inline no-top-margin quarter-horizontal-space">
+      <ul class="control unstyled all-20 inline no-top-margin quarter-horizontal-space">
         <li><input type="radio" id="yes" name="displaydate" value="true"><label for="yes" {% block displayDateTrue %}{% endblock %}>Yes</label></li>
         <li><input type="radio" id="no" name="displaydate" value="false"><label for="no" {% block displayDateFalse %}{% endblock %}>No</label></li>
       </ul>
