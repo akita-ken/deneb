@@ -62,9 +62,12 @@
 
     // Render Twig template in route
     if (firstRunCheck()) {
-        $app->get('/', function($request, $response, $args) {
-            return $this->view->render($response, 'base.twig');
-        });
+        setConfig($session);
+        // $app->get('/', function($request, $response, $args) {
+        //     return $this->view->render($response, 'base.twig', [
+        //         'templatePath' => $this->templatePath
+        //     ]);
+        // });
 
         $app->get('/admin', function($request, $response, $args) use ($session) {
             if (sessionCheck($session)) {
