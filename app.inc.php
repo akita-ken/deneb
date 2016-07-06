@@ -80,6 +80,24 @@
                     mkdir('pages', 0755);
                 }
                 $navigation = createNavigation(loadPages($this->pagePath));
+                $container['templates'] = loadTemplates();
+
+                $flashWarn = $session->getSegment('deneb')->get('persistentWarn');
+
+                // clear out persistent warnings (from app init)
+                $session->getSegment('deneb')->set('persistentWarn', null);
+
+                $flashWarn .= $session->getSegment('deneb')->getFlash('flashWarn');
+
+                foreach ($this->templates as $template => $path) {
+                    if (!$path) {
+                        unset($container['templates'][$template]);
+                        $flashWarn .= '<li>The template \'' . $template . '\' is missing one or more required files.</li>';
+                    }
+                }
+
+                $session->getSegment('deneb')->setFlash('flashWarn', $flashWarn);
+                $session->commit();
 
                 return $this->view->render($response, 'admin.twig', [
                     'flashSuccess' => $session->getSegment('deneb')->getFlash('flashSuccess'),
