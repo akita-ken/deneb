@@ -33,6 +33,11 @@
     // Set default template
     $container['template'] = 'deneb';
 
+    // Set template path service
+    $container['templatePath'] = function($c) {
+        return $c['templates'][$c['template']];
+    };
+
     // Register component on container
     $container['view'] = function($c) {
         $view = new \Slim\Views\Twig('templates', [
