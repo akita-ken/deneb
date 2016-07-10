@@ -100,6 +100,7 @@
                     'flashSuccess' => $session->getSegment('deneb')->getFlash('flashSuccess'),
                     'flashWarn' => $session->getSegment('deneb')->getFlash('flashWarn'),
                     'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
+                    'baseUrl' => $request->getUri()->getBasePath(),
                     'templates' => $container['templates'],
                     'navigation' => $navigation,
                     'activeTemplate' => $this->template,
@@ -132,6 +133,7 @@
         $app->get('/login', function($request, $response, $args) {
             // CSRF token name and value
             return $this->view->render($response, 'login.twig', [
+                'baseUrl' => $request->getUri()->getBasePath(),
                 'templatePath' => $this->templatePath,
                 'name' => $request->getAttribute('csrf_name'),
                 'value' => $request->getAttribute('csrf_value')
@@ -174,6 +176,7 @@
                     'flashError' => $flashError,
                     'path' => substr(str_replace($this->pagePath, '', $reverseNavigation[$args['hash']]), 0, -3),
                     'page' => $page,
+                    'baseUrl' => $request->getUri()->getBasePath(),
                     'templates' => $this->pageTemplates,
                     'templatePath' => $this->templatePath,
                     'name' => $request->getAttribute('csrf_name'),
@@ -257,6 +260,7 @@
                 return $this->view->render($response, 'new.twig', [
                     'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
                     'navigation' => $navigation,
+                    'baseUrl' => $request->getUri()->getBasePath(),
                     'templatePath' => $this->templatePath,
                     'templates' => $this->pageTemplates,
                     'name' => $request->getAttribute('csrf_name'),
@@ -295,6 +299,7 @@
                 return $this->view->render($response, 'new-template.twig', [
                     'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
                     'navigation' => $navigation,
+                    'baseUrl' => $request->getUri()->getBasePath(),
                     'templatePath' => $this->templatePath,
                     'name' => $request->getAttribute('csrf_name'),
                     'value' => $request->getAttribute('csrf_value')
@@ -327,6 +332,7 @@
     } else {
         $app->get('/', function($request, $response, $args) {
             return $this->view->render($response, 'firstrun.twig', [
+                'baseUrl' => $request->getUri()->getBasePath(),
                 'templatePath' => $this->templatePath
             ]);
         });
@@ -345,6 +351,7 @@
                 return $response->withRedirect('/deneb/admin', 301);
             } else {
                 return $this->view->render($response, 'error.twig', [
+                    'baseUrl' => $request->getUri()->getBasePath(),
                     'templatePath' => $this->templatePath
                 ]);
             }
@@ -500,6 +507,7 @@
                     $app->get('/', function($request, $response, $args) use ($path, $navigation) {
                         $page = readPage($path);
                         return $this->view->render($response, $this->pageTemplates[$page['meta']['template']], [
+                            'baseUrl' => $request->getUri()->getBasePath(),
                             'templatePath' => $this->templatePath,
                             'navigation' => $navigation,
                             'contents' => $page['contents']
@@ -511,6 +519,7 @@
 
                         return $this->view->render($response, $this->pageTemplates[$page['meta']['template']], [
                             'templatePath' => $this->templatePath,
+                            'baseUrl' => $request->getUri()->getBasePath(),
                             'navigation' => $navigation,
                             'contents' => $page['contents']
                         ]);
