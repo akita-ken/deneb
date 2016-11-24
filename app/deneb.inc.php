@@ -642,6 +642,23 @@ function loadPageTemplates($path)
     return $templates;
 }
 
+function loadFiles($path)
+{
+    $files = array();
+    $exclude = [".DS_Store", ".", "..", "Desktop.ini", "Thumbs.db"];
+
+    // check if $path is a directory first
+    // because we aren't creating one if no files were uploaded
+    if (is_dir($path)) {
+        foreach(scandir($path) as $file) {
+            if (!in_array($file, $exclude)) {
+                $files[$file] = $path . '/' . $file;
+            }
+        }
+    }
+    return $files;
+}
+
 function createRoutes($pages, $app, $pagePath)
 {
     $navigation = createNavigation($pages, $pagePath);
