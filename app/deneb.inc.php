@@ -53,6 +53,7 @@ $container['view'] = function($c) {
         $c['router'],
         $c['request']->getUri()
     ));
+    $view->addExtension(new ImageTwig());
     $view->addExtension(new MarkdownExtension($c['engine']));
 
     return $view;
