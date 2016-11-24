@@ -773,6 +773,7 @@ function writePage($pageData, $content)
     $file = fopen($pageData['path'], 'w');
     array_shift($pageData);
     $pageData = json_encode($pageData, JSON_PRETTY_PRINT);
+    $content = trim($content, " \r\n\t\0"); // trim extraneous characters from content
     $page = $pageData . "\r\n\r\n--\r\n" . $content;
     fwrite($file, $page);
     fclose($file);
