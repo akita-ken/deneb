@@ -431,7 +431,7 @@ if (firstRunCheck()) {
       return $response->withRedirect('/deneb', 301);
     });
 
-    createRoutes(loadPages($app->getContainer()->pagePath), $app, $container->pagePath);
+    createRoutes(loadPages($container->pagePath), $app, $container->pagePath);
 
 } else {
     $app->get('/', function($request, $response, $args) {
