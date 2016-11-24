@@ -771,7 +771,7 @@ function createReverseNavigation($pages)
 function writePage($pageData, $content)
 {
     $file = fopen($pageData['path'], 'w');
-    array_shift($pageData);
+    array_shift($pageData); // first element is path, which we do not need
     $pageData = json_encode($pageData, JSON_PRETTY_PRINT);
     $content = trim($content, " \r\n\t\0"); // trim extraneous characters from content
     $page = $pageData . "\r\n\r\n--\r\n" . $content;
