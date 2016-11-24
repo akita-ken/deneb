@@ -54,6 +54,7 @@ $container['view'] = function($c) {
         $c['request']->getUri()
     ));
     $view->addExtension(new ImageTwig());
+    $view->addExtension(new Twig_Extension_StringLoader());
     $view->addExtension(new MarkdownExtension($c['engine']));
 
     return $view;
