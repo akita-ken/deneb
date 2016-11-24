@@ -1,5 +1,7 @@
 <?php
 
+require 'ImageTwig.php';
+
 use Aptoma\Twig\Extension\MarkdownExtension;
 use Aptoma\Twig\Extension\MarkdownEngine;
 
