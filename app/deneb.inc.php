@@ -175,14 +175,6 @@ if (firstRunCheck()) {
             $page = readPage($reverseNavigation[$args['hash']]);
 
             $filePath = $this->uploadPath . '/' . $args['hash'];
-            $files = array();
-            $exclude = [".DS_Store", ".", "..", "Desktop.ini", "Thumbs.db"];
-
-            foreach(scandir($filePath) as $file) {
-                if (!in_array($file, $exclude)) {
-                    $files[] = $file;
-                }
-            }
 
             $segment = $session->getSegment('deneb');
             $segment->setFlash('path', $reverseNavigation[$args['hash']]);
@@ -199,7 +191,7 @@ if (firstRunCheck()) {
                 'flashInfo' => $flashInfo,
                 'path' => substr(str_replace($this->pagePath, '', $reverseNavigation[$args['hash']]), 0, -3),
                 'page' => $page,
-                'files' => $files,
+                'files' => loadFiles($filePath),
                 'baseUrl' => $request->getUri()->getBasePath(),
                 'templates' => $this->pageTemplates,
                 'templatePath' => $this->templatePath,
