@@ -497,6 +497,13 @@ function fieldValidation($pageData)
     return $validationResult;
 }
 
+function console_log($data)
+{
+  echo '<script>';
+  echo 'console.log('. json_encode( $data ) .')';
+  echo '</script>';
+}
+
 function sessionCheck($session)
 {
     $segment = $session->getSegment('deneb');
