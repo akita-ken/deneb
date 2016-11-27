@@ -756,6 +756,10 @@ function createNavigation($pages, $pagePath)
             $navigation[$path][$meta['linkname']] = $meta['category']. '\\' . $meta['hash'] . '\\' . substr($leafValue, strlen($pagePath), -3);
         }
     }
+
+    // sort the navigation array by key alphabetically before returning
+    ksort($navigation);
+
     return $navigation;
 }
 
