@@ -663,11 +663,13 @@ function createRoutes($pages, $app, $pagePath)
             if ($path == 'pages/index.md') {
                 $app->get('/', function($request, $response, $args) use ($path, $navigation) {
                     $page = readPage($path);
+                    $filePath = $this->uploadPath . '/' . $page['meta']['hash'];
                     return $this->view->render($response, $this->pageTemplates[$page['meta']['template']], [
                         'baseUrl' => $request->getUri()->getBasePath(),
                         'templatePath' => $this->templatePath,
                         'navigation' => $navigation,
                         'meta' => $page['meta'],
+                        'files' => loadFiles($filePath),
                         'contents' => $page['contents']
                         ]);
                 })->setName('index');
@@ -678,12 +680,13 @@ function createRoutes($pages, $app, $pagePath)
             } else {
                 $app->get(substr($path, 5, -3), function($request, $response, $args) use ($path, $navigation) {
                     $page = readPage($path);
-
+                    $filePath = $this->uploadPath . '/' . $page['meta']['hash'];
                     return $this->view->render($response, $this->pageTemplates[$page['meta']['template']], [
                         'templatePath' => $this->templatePath,
                         'baseUrl' => $request->getUri()->getBasePath(),
                         'navigation' => $navigation,
                         'meta' => $page['meta'],
+                        'files' => loadFiles($filePath),
                         'contents' => $page['contents']
                     ]);
                 });
