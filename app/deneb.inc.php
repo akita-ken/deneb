@@ -656,7 +656,6 @@ function createRoutes($pages, $app, $pagePath)
     // we need to use the container's pagePath values for createNavigation()
     // because this function is going to be called recursively
     $navigation = createNavigation(loadPages($app->getContainer()->pagePath), $app->getContainer()->pagePath);
-    console_log($navigation);
 
     foreach ($pages as $pageName => $path) {
         if (!is_array($path)) {
