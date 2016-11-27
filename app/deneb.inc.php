@@ -741,12 +741,14 @@ function createNavigation($pages, $pagePath)
         $keys = array();
         $meta = readMeta($leafValue);
 
-        if ($iterator->getDepth() == 0) {
-            $navigation[$meta['linkname']] = $meta['category'] . '\\' . $meta['hash'] . '\\' . substr($leafValue, strlen($pagePath), -3);
-        } else {
-            foreach (range(0, $iterator->getDepth() - 1) as $depth) {
-                $keys[] = $iterator->getSubIterator($depth)->key();
-            }
+        // exclude the index page, we don't need a link for that (site logo performs the same function)
+        if ($meta['linkname'] != 'Home') {
+            if ($iterator->getDepth() == 0) {
+                $navigation[$meta['linkname']] = $meta['category'] . '\\' . $meta['hash'] . '\\' . substr($leafValue, strlen($pagePath), -3); // '\\' is being used as a delimiter between the category and hash
+            } else {
+                foreach (range(0, $iterator->getDepth() - 1) as $depth) {
+                    $keys[] = $iterator->getSubIterator($depth)->key();
+                }
 
             $path = '/'.join('/', $keys);
 
