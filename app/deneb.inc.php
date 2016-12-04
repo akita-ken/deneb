@@ -750,12 +750,14 @@ function createNavigation($pages, $pagePath)
                     $keys[] = $iterator->getSubIterator($depth)->key();
                 }
 
-            $path = '/'.join('/', $keys);
+                $path = ''.join('/', $keys);
+                console_log($path);
 
-            if (!array_key_exists($path, $navigation)) {
-                $navigation[$path] = array();
+                if (!array_key_exists($path, $navigation)) {
+                    $navigation[$path] = array();
+                }
+                $navigation[$path][$meta['linkname']] = $meta['category']. '\\' . $meta['hash'] . '\\' . substr($leafValue, strlen($pagePath), -3);
             }
-            $navigation[$path][$meta['linkname']] = $meta['category']. '\\' . $meta['hash'] . '\\' . substr($leafValue, strlen($pagePath), -3);
         }
     }
 
