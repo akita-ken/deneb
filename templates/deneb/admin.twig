@@ -34,13 +34,13 @@
                     <a href="#">{{ linkname }}</a>
                     <ul class="submenu permanently-open">
                       {% for linkname, category2 in category %}
-                        {% set attr = category2 | split(',') %}
+                        {% set attr = category2 | split('\\') %}
                         <li><a href="/deneb/admin/edit/{{ attr[1] }}">{{ linkname }}<span class="ink-badge grey {{ category2 | lower }}-badge push-right">{{ attr[0] }}</span></a></li>
                       {% endfor %}
                     </ul>
                   </li>
                 {% else %}
-                  {% set attr = category | split(',') %}
+                  {% set attr = category | split('\\') %}
                   <li>
                     <a href="/deneb/admin/edit/{{ attr[1] }}">{{ linkname }}<span class="ink-badge grey {{ category | lower }}-badge push-right">{{ attr[0] }}</span></a>
                   </li>
