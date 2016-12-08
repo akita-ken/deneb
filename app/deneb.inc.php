@@ -83,7 +83,7 @@ if (firstRunCheck()) {
             if (!file_exists('pages')) {
                 mkdir('pages', 0755);
             }
-            $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath);
+            $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath, true);
             $container['templates'] = loadTemplates();
 
             $segment = $session->getSegment('deneb');
@@ -739,7 +739,7 @@ function createSiteNavigation($pages)
     return $navigation;
 }
 */
-function createNavigation($pages, $pagePath)
+function createNavigation($pages, $pagePath, $index = false)
 {
     $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($pages));
     $navigation = array();
@@ -749,7 +749,7 @@ function createNavigation($pages, $pagePath)
         $meta = readMeta($leafValue);
 
         // exclude the index page, we don't need a link for that (site logo performs the same function)
-        if ($meta['linkname'] != 'Home') {
+        if ($index || $meta['linkname'] != 'Home') {
             if ($iterator->getDepth() == 0) {
                 $navigation[$meta['linkname']] = $meta['category'] . '\\' . $meta['hash'] . '\\' . substr($leafValue, strlen($pagePath), -3); // '\\' is being used as a delimiter between the category and hash
             } else {
