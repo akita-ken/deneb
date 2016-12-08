@@ -751,7 +751,6 @@ function createNavigation($pages, $pagePath)
                 }
 
                 $path = ''.join('/', $keys);
-                console_log($path);
 
                 if (!array_key_exists($path, $navigation)) {
                     $navigation[$path] = array();
