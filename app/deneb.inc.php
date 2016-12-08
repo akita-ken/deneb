@@ -109,7 +109,7 @@ if (firstRunCheck()) {
                 'flashSuccess' => $segment->getFlash('flashSuccess'),
                 'flashWarn' => $segment->getFlash('flashWarn'),
                 'flashError' => $segment->getFlash('flashError'),
-                'baseUrl' => $request->getUri()->getBaseUrl(),
+                'baseUrl' => $request->getUri()->getBasePath(),
                 'templates' => $container['templates'],
                 'navigation' => $navigation,
                 'activeTemplate' => $this->template,
