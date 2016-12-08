@@ -7,7 +7,7 @@
 <div class="top-menu">
   <nav class="ink-navigation ink-grid">
     <ul class="menu horizontal black">
-      <li id="kennyl"><a href={{ baseUrl }}><span class="darkBlue">kennyl</span><span class="lightBlue">.im</span></a></li>
+      <li id="kennyl"><a href={% if baseUrl is empty %}/{% else %}{{ baseUrl }}{% endif %}><span class="darkBlue">kennyl</span><span class="lightBlue">.im</span></a></li>
       {% block navmenu %}
         {% for linkname, category in navigation %}
           {% if category is not iterable %}
