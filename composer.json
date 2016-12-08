@@ -3,7 +3,7 @@
     "description": "Deneb is a simple flat-file content management system written in PHP",
     "type": "project",
     "config": {
-        "secure-http": "false"
+        "secure-http": false
     },
     "require": {
         "php": ">=4.0.0",
