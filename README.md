@@ -9,4 +9,4 @@ Built on the [Slim Microframework](http://www.slimframework.com) and implementin
 ## Requirements
 
 * Nginx or Apache with mod_rewrite
-* PHP 4.0.0 or later
+* PHP 5.5.0 or later
