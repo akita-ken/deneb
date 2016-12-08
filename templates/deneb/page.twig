@@ -9,6 +9,26 @@
     <ul class="menu horizontal black">
       <li id="kennyl"><a href={{ baseUrl }}><span class="darkBlue">kennyl</span><span class="lightBlue">.im</span></a></li>
       {% block navmenu %}
+        {% for linkname, category in navigation %}
+          {% if category is not iterable %}
+            {% set attr = category | split('\\')  %}
+            <li><a href="{{ baseUrl }}{{ attr[2] }}">{{ linkname }}</a><li>
+          {% else %}
+            {% set path = linkname | split('/') %}
+            {% if path[2] is not defined %}
+            {# we are intentionally handling only 1 level of nesting #}
+              <li>
+                <a>{{ linkname | capitalize }}</a>
+                <ul class="submenu">
+                  {% for linkname2, category in category %}
+                    {% set attr = category | split('\\')  %}
+                    <li><a href="{{ baseUrl }}{{ attr[2] }}">{{ linkname2 }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
       {% endblock %}
     </ul>
   </nav>
