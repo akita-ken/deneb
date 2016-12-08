@@ -171,7 +171,7 @@ if (firstRunCheck()) {
 
     $app->get('/admin/edit/{hash}', function($request, $response, $args) use ($session) {
         if (sessionCheck($session)) {
-            $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath);
+            $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath, true);
             $reverseNavigation = createReverseNavigation(loadPages($this->pagePath));
             $page = readPage($reverseNavigation[$args['hash']]);
 
@@ -348,7 +348,7 @@ if (firstRunCheck()) {
 
     $app->get('/admin/new', function($request, $response, $args) use ($session) {
         if (sessionCheck($session)) {
-            $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath);
+            $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath, true);
 
             return $this->view->render($response, 'new.twig', [
                 'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
@@ -391,7 +391,7 @@ if (firstRunCheck()) {
 /*
     $app->get('/admin/template/new', function($request, $response, $args) use ($session) {
         if (sessionCheck($session)) {
-            $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath);
+            $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath, true);
 
             return $this->view->render($response, 'new-template.twig', [
                 'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
