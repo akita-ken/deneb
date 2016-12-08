@@ -678,7 +678,7 @@ function createRoutes($pages, $app, $pagePath)
                     $page = readPage($path);
                     $filePath = $this->uploadPath . '/' . $page['meta']['hash'];
                     return $this->view->render($response, $this->pageTemplates[$page['meta']['template']], [
-                        'baseUrl' => $request->getUri()->getBasePath(),
+                        'baseUrl' => $request->getUri()->getBaseUrl(),
                         'templatePath' => $this->templatePath,
                         'navigation' => $navigation,
                         'meta' => $page['meta'],
