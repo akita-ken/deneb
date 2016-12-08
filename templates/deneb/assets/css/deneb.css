@@ -97,6 +97,13 @@ body {
   border-width: 1px;
 }
 
+#content-box {
+  background-color: #fff;
+  box-shadow: 0 0 10px #bbb;
+  margin: 100px auto 20px;
+  padding: 20px;
+}
+
 /* ink overrides */
 
 .permanently-open {
