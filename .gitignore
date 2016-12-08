@@ -4,6 +4,9 @@
 pages/*
 !pages/index.md
 
+### deneb Uploads ###
+uploads/*
+
 ### Twig PHP ###
 cache/
 
