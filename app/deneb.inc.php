@@ -430,6 +430,8 @@ if (firstRunCheck()) {
     $app->get('/', function($request, $response, $args) {
         return $this->view->render($response, 'firstrun.twig', [
             'baseUrl' => $request->getUri()->getBasePath(),
+            'name' => $request->getAttribute('csrf_name'),
+            'value' => $request->getAttribute('csrf_value'),
             'templatePath' => $this->templatePath
         ]);
     });
