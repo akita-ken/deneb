@@ -16,14 +16,14 @@
   </head>
 
   <body>
-    <div class="wrap">
+    {% block nav %}
+    {% endblock %}
 
-      {% block nav %}
-      {% endblock %}
+    {% block content %}
+    {% endblock %}
 
-      {% block content %}
-      {% endblock %}
-    </div>
+    {% block footer %}
+    {% endblock %}
 
   </body>
   <script src="{{ asset_path }}/js/ink-all.min.js"></script>
