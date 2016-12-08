@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block navmenu %}
-  <li class="right"><a href="/deneb/logout">Logout</a></li>
+  <li class="right"><a href="{{ baseUrl }}/logout">Logout</a></li>
 {% endblock %}
 
 {% block content %}
@@ -13,17 +13,17 @@
       {% block sidebar %}
         <div id="sidebar" class="all-30">
           <div class="column-group">
-            <a class="menu-button large" href="/deneb/admin">Administration</a>
+            <a class="menu-button large" href="{{ baseUrl }}/admin">Administration</a>
           </div>
           <div class="column-group">
-            <a class="menu-button large" href="/deneb/admin/stats">Stats</a>
+            <a class="menu-button large" href="{{ baseUrl }}/admin/stats">Stats</a>
           </div>
           <div class="column-group">
             <div class="all-70">
               <div class="sidebar-header large">Pages</div>
             </div>
             <div class="all-30">
-              <a href="/deneb/admin/new" class="ink-button green half-vertical-space push-right half-right-space">New page</a>
+              <a href="{{ baseUrl }}/admin/new" class="ink-button green half-vertical-space push-right half-right-space">New page</a>
             </div>
           </div>
           <nav class="ink-navigation">
@@ -35,14 +35,14 @@
                     <ul class="submenu permanently-open">
                       {% for linkname, category2 in category %}
                         {% set attr = category2 | split('\\') %}
-                        <li><a href="/deneb/admin/edit/{{ attr[1] }}">{{ linkname }}<span class="ink-badge grey {{ category2 | lower }}-badge push-right">{{ attr[0] }}</span></a></li>
+                        <li><a href="{{ baseUrl }}/admin/edit/{{ attr[1] }}">{{ linkname }}<span class="ink-badge grey {{ category2 | lower }}-badge push-right">{{ attr[0] }}</span></a></li>
                       {% endfor %}
                     </ul>
                   </li>
                 {% else %}
                   {% set attr = category | split('\\') %}
                   <li>
-                    <a href="/deneb/admin/edit/{{ attr[1] }}">{{ linkname }}<span class="ink-badge grey {{ category | lower }}-badge push-right">{{ attr[0] }}</span></a>
+                    <a href="{{ baseUrl }}/admin/edit/{{ attr[1] }}">{{ linkname }}<span class="ink-badge grey {{ category | lower }}-badge push-right">{{ attr[0] }}</span></a>
                   </li>
                 {% endif %}
               {% endfor %}
@@ -54,7 +54,7 @@
               <div class="sidebar-header large">Templates</div>
             </div>
             <div class="all-40">
-              <a href="/deneb/admin/templates/new" class="ink-button green half-vertical-space push-right half-right-space">New template file</a>
+              <a href="{{ baseUrl }}/admin/templates/new" class="ink-button green half-vertical-space push-right half-right-space">New template file</a>
             </div>
           </div>
           <nav class="ink-navigation">
