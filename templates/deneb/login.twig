@@ -11,6 +11,14 @@
     <div class="align-center">
       <h1>deneb</h1>
       <h4>Login</h4>
+      {% if flashError is not null %}
+        <div class="column-group half-space">
+          <div class="ink-alert basic error all-70 right" role="alert">
+            <button class="ink-dismiss">&times;</button>
+            <p>{{ flashError | raw }}</p>
+          </div>
+        </div>
+      {% endif %}
     </div>
 
     <form class="ink-form" action="auth" method="post">
