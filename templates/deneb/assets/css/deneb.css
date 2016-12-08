@@ -46,7 +46,7 @@ html, body {
 /* background */
 
 body {
-  background-image: url('/deneb/templates/deneb/assets/img/sl.png');
+  background-image: url('/templates/deneb/assets/img/sl.png');
 }
 
 #sidebar {
