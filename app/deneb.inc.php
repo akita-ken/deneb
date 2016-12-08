@@ -139,13 +139,14 @@ if (firstRunCheck()) {
         }
     });
 
-    $app->get('/login', function($request, $response, $args) {
+    $app->get('/login', function($request, $response, $args) use ($session) {
         // CSRF token name and value
         return $this->view->render($response, 'login.twig', [
             'baseUrl' => $request->getUri()->getBasePath(),
             'templatePath' => $this->templatePath,
             'name' => $request->getAttribute('csrf_name'),
-            'value' => $request->getAttribute('csrf_value')
+            'value' => $request->getAttribute('csrf_value'),
+            'flashError' => $session->getSegment('deneb')->getFlash('flashError')
         ]);
     })->setName('login');
 
