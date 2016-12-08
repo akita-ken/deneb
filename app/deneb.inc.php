@@ -419,17 +419,20 @@ if (firstRunCheck()) {
     });
 
     $app->get('/logout', function($request, $response, $args) use ($session) {
-      $session->destroy();
+        $baseUrl = $request->getUri()->getBasePath();
+        $session->destroy();
 
-      return $response->withRedirect('/deneb', 301);
+        return $response->withRedirect($baseUrl, 301);
     });
 
     createRoutes(loadPages($container->pagePath), $app, $container->pagePath);
 
 } else {
     $app->get('/', function($request, $response, $args) {
+        $baseUrl = $request->getUri()->getBasePath();
+
         return $this->view->render($response, 'firstrun.twig', [
-            'baseUrl' => $request->getUri()->getBasePath(),
+            'baseUrl' => $baseUrl,
             'name' => $request->getAttribute('csrf_name'),
             'value' => $request->getAttribute('csrf_value'),
             'templatePath' => $this->templatePath
@@ -438,6 +441,7 @@ if (firstRunCheck()) {
 
     $app->post('/firstRun', function($request, $response, $args) use ($session) {
         $userDetails = $request->getParsedBody();
+        $baseUrl = $request->getUri()->getBasePath();
         if (createAdminUser($userDetails) && configInit()) {
             $segment = $session->getSegment('deneb');
             $segment->set('username', $userDetails['username']);
@@ -447,7 +451,7 @@ if (firstRunCheck()) {
             // set the active template
             $container['template'] = 'deneb';
 
-            return $response->withRedirect('/deneb/admin', 301);
+            return $response->withRedirect($baseUrl . '/admin', 301);
         } else {
             return $this->view->render($response, 'error.twig', [
                 'baseUrl' => $request->getUri()->getBasePath(),
