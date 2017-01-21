@@ -123,3 +123,22 @@ body {
 .no-top-margin {
   margin-top: 0;
 }
+
+textarea.code-text {
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+.small {
+  font-size: 0.75rem !important;
+}
+
+.text-button
+{
+    display: inline;
+    background-color: Transparent;
+    text-decoration: none;
+    color: #e82c0c;
+    cursor: pointer;
+    border:0
+}
