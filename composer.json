@@ -2,14 +2,11 @@
     "name": "akita-ken/deneb",
     "description": "Deneb is a simple flat-file content management system written in PHP",
     "type": "project",
-    "config": {
-        "secure-http": false
-    },
     "require": {
         "php": ">=4.0.0",
         "slim/slim": "^3.0",
         "slim/twig-view": "^2.0",
-        "pear/config_lite": "*",
+        "pear/config_lite": "*@dev",
         "aura/session": "^2.0",
         "erusev/parsedown": "^1.6.0",
         "slim/csrf": "^0.6.0",
