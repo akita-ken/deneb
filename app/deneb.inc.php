@@ -102,6 +102,18 @@ if (firstRunCheck()) {
             $segment->setFlash('flashWarn', $flashWarn);
             // $session->commit();
 
+            $config = new Config_Lite(CONFIG_FILE_PATH);
+
+            $headerTextRaw = $config->get('template', 'headerText', false);
+            $headerText = str_replace('{{ baseUrl }}', $request->getUri()->getBasePath(), $headerTextRaw);
+            $headerText = str_replace('{{ templatePath }}', $this->templatePath, $headerText);
+
+            $footerTextRaw = $config->get('template', 'footerText', false);
+            $footerText = str_replace('{{ baseUrl }}', $request->getUri()->getBasePath(), $headerTextRaw);
+            $footerText = str_replace('{{ templatePath }}', $this->templatePath, $headerTextRaw);
+
+            $javascriptSnippetRaw = $config->get('template', 'javascriptSnippet', false);
+
             return $this->view->render($response, 'admin.twig', [
                 'flashSuccess' => $segment->getFlash('flashSuccess'),
                 'flashWarn' => $segment->getFlash('flashWarn'),
@@ -186,6 +198,14 @@ if (firstRunCheck()) {
             $flashInfo = $segment->getFlash('flashInfo');
             $session->commit();
 
+            $config = new Config_Lite(CONFIG_FILE_PATH);
+
+            $headerText = $config->get('template', 'headerText', false);
+            $headerText = str_replace('{{ baseUrl }}', $request->getUri()->getBasePath(), $headerText);
+            $headerText = str_replace('{{ templatePath }}', $this->templatePath, $headerText);
+
+            $footerText = $config->get('template', 'footerText', false);
+
             return $this->view->render($response, 'edit.twig', [
                 'hash' => $args['hash'],
                 'navigation' => $navigation,
@@ -198,6 +218,8 @@ if (firstRunCheck()) {
                 'baseUrl' => $request->getUri()->getBasePath(),
                 'templates' => $this->pageTemplates,
                 'templatePath' => $this->templatePath,
+                'headerText' => $headerText,
+                'footerText' => $footerText,
                 'name' => $request->getAttribute('csrf_name'),
                 'value' => $request->getAttribute('csrf_value')
             ]);
@@ -654,6 +676,16 @@ function createRoutes($pages, $app, $pagePath)
     // because this function is going to be called recursively
     $navigation = createNavigation(loadPages($app->getContainer()->pagePath), $app->getContainer()->pagePath);
 
+    $config = new Config_Lite(CONFIG_FILE_PATH);
+
+    $headerText = $config->get('template', 'headerText', false);
+    $headerText = str_replace('{{ templatePath }}', $app->getContainer()->templatePath, $headerText);
+
+    $footerText = $config->get('template', 'footerText', false);
+
+    $javascriptSnippet = $config->get('template', 'javascriptSnippet', false);
+
+    $javascriptSnippet = str_replace('{{ templatePath }}', $app->getContainer()->templatePath, $javascriptSnippet);
     foreach ($pages as $pageName => $path) {
         if (!is_array($path)) {
             if ($path == 'pages/index.md') {
