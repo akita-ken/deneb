@@ -438,12 +438,31 @@ if (firstRunCheck()) {
         if (sessionCheck($session)) {
             $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath, true);
 
+            $config = new Config_Lite(CONFIG_FILE_PATH);
+
+            $segment = $session->getSegment('deneb');
+
+            // if we're being redirected from a previous error, the /create
+            // POST handler would've saved the form contents,
+            // so we're just passing it on to the template
+            $createForm = $segment->getFlash('createForm');
+
+            $headerText = $config->get('template', 'headerText', false);
+            $headerText = str_replace('{{ baseUrl }}', $request->getUri()->getBasePath(), $headerText);
+
+            $headerText = str_replace('{{ templatePath }}', $this->templatePath, $headerText);
+
+            $footerText = $config->get('template', 'footerText', false);
+
             return $this->view->render($response, 'new.twig', [
                 'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
                 'navigation' => $navigation,
                 'baseUrl' => $request->getUri()->getBasePath(),
                 'templatePath' => $this->templatePath,
                 'templates' => $this->pageTemplates,
+                'headerText' => $headerText,
+                'footerText' => $footerText,
+                'createForm' => $createForm,
                 'name' => $request->getAttribute('csrf_name'),
                 'value' => $request->getAttribute('csrf_value')
             ]);
