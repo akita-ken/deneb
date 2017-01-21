@@ -30,7 +30,7 @@
     <div class="column-group half-space">
       <div class="ink-alert basic success" role="alert">
         <button class="ink-dismiss">&times;</button>
-        <p>{{ flashSuccess }}</p>
+        <p>{{ flashSuccess | raw }}</p>
       </div>
     </div>
   {% endif %}
@@ -48,7 +48,7 @@
     <div class="column-group half-space">
       <div class="ink-alert basic warning" role="alert">
         <button class="ink-dismiss">&times;</button>
-        <ul>{{ flashWarn }}</ul>
+        <p>{{ flashWarn | raw }}</p>
       </div>
     </div>
   {% endif %}
@@ -57,7 +57,7 @@
     <div class="column-group half-space">
       <div class="ink-alert basic info" role="alert">
         <button class="ink-dismiss">&times;</button>
-        <ul>{{ flashInfo }}</ul>
+        <p>{{ flashInfo | raw }}</p>
       </div>
     </div>
   {% endif %}
