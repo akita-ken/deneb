@@ -146,6 +146,18 @@ if (firstRunCheck()) {
                 $config->set('application', 'template', $settings['template']);
             }
 
+            if ($settings['header-text'] != $config->get('template', 'headerText', false)) {
+                $config->set('template', 'headerText', $settings['header-text']);
+            }
+
+            if ($settings['footer-text'] != $config->get('template', 'footerText', false)) {
+                $config->set('template', 'footerText', $settings['footer-text']);
+            }
+
+            if ($settings['javascript-snippet'] != $config->get('template', 'javascriptSnippet', false)) {
+                $config->set('template', 'javascriptSnippet', $settings['javascript-snippet']);
+            }
+
             $config->save();
             return $response->withRedirect($this->router->pathFor('admin'), 301);
         } else {
