@@ -1,7 +1,7 @@
 {
     "linkname": "Home",
     "title": "Home",
-    "header": "Deneb",
+    "header": "Deneb – a simple flat-file CMS",
     "date": "",
     "description": "deneb CMS default index page",
     "category": "",
