@@ -116,6 +116,11 @@ if (firstRunCheck()) {
                 'navigation' => $navigation,
                 'activeTemplate' => $this->template,
                 'templatePath' => $this->templatePath,
+                'headerText' => $headerText,
+                'footerText' => $footerText,
+                'headerTextRaw' => $headerTextRaw,
+                'footerTextRaw' => $footerTextRaw,
+                'javascriptSnippetRaw' => $javascriptSnippetRaw,
                 'name' => $request->getAttribute('csrf_name'),
                 'value' => $request->getAttribute('csrf_value')
             ]);
