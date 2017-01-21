@@ -47,10 +47,10 @@ html, body {
   height: 100%;
 }
 
-/* background */
+/* template-specific styling */
 
-body {
-  background-image: url('/templates/deneb/assets/img/sl.png'), url('/deneb/templates/deneb/assets/img/sl.png');
+.panel {
+  background-color: #e5e5e4;
 }
 
 #sidebar {
