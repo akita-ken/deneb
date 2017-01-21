@@ -2,6 +2,8 @@
 
 require 'ImageTwig.php';
 
+include 'configPath.php';
+
 use Aptoma\Twig\Extension\MarkdownExtension;
 use Aptoma\Twig\Extension\MarkdownEngine;
 
