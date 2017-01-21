@@ -165,6 +165,32 @@ if (firstRunCheck()) {
         }
     });
 
+    $app->get('/admin/stats', function($request, $response, $args) use ($session) {
+        if (sessionCheck($session)) {
+            $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath, true);
+
+            $config = new Config_Lite(CONFIG_FILE_PATH);
+
+            $headerTextRaw = $config->get('template', 'headerText', false);
+            $headerText = str_replace('{{ baseUrl }}', $request->getUri()->getBasePath(), $headerTextRaw);
+            $headerText = str_replace('{{ templatePath }}', $this->templatePath, $headerText);
+
+            $footerTextRaw = $config->get('template', 'footerText', false);
+            $footerText = str_replace('{{ baseUrl }}', $request->getUri()->getBasePath(), $headerTextRaw);
+            $footerText = str_replace('{{ templatePath }}', $this->templatePath, $headerTextRaw);
+
+            return $this->view->render($response, 'stats.twig', [
+                'baseUrl' => $request->getUri()->getBasePath(),
+                'templatePath' => $this->templatePath,
+                'navigation' => $navigation,
+                'headerText' => $headerText,
+                'footerText' => $footerText,
+                ]);
+        } else {
+            return $response->withRedirect($this->router->pathFor('login'), 301);
+        }
+    })->setName('stats');
+
     $app->get('/login', function($request, $response, $args) use ($session) {
         // CSRF token name and value
         return $this->view->render($response, 'login.twig', [
