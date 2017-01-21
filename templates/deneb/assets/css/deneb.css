@@ -5,9 +5,23 @@
   font-style: normal;
 }
 
+/* logo-specific styling */
+.deneb-logo {
+  width: 240px;
 }
 
+.deneb-logo-nav {
+  height: 55px;
 }
+
+.deneb-font {
+  font-family: 'Raleway';
+}
+
+.deneb-blue {
+  color: #0088e5;
+}
+
 /* this doesn't seem important
 .wrap {
   min-height: 100%;
