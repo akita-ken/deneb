@@ -231,6 +231,7 @@ if (firstRunCheck()) {
 
             $segment = $session->getSegment('deneb');
             $segment->setFlash('path', $reverseNavigation[$args['hash']]);
+            $flashSuccess = $segment->getFlash('flashSuccess');
             $flashError = $segment->getFlash('flashError');
             $flashWarn = $segment->getFlash('flashWarn');
             $flashInfo = $segment->getFlash('flashInfo');
@@ -247,6 +248,7 @@ if (firstRunCheck()) {
             return $this->view->render($response, 'edit.twig', [
                 'hash' => $args['hash'],
                 'navigation' => $navigation,
+                'flashSuccess' => $flashSuccess,
                 'flashError' => $flashError,
                 'flashWarn' => $flashWarn,
                 'flashInfo' => $flashInfo,
