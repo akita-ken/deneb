@@ -74,11 +74,6 @@ $app->add(new \Slim\Csrf\Guard);
 // Render Twig template in route
 if (firstRunCheck()) {
     setConfig($session);
-    // $app->get('/', function($request, $response, $args) {
-    //     return $this->view->render($response, 'base.twig', [
-    //         'templatePath' => $this->templatePath
-    //     ]);
-    // });
 
     $app->get('/admin', function($request, $response, $args) use ($session) {
         if (sessionCheck($session)) {
@@ -287,14 +282,6 @@ if (firstRunCheck()) {
     $app->post('/admin/create', function($request, $response, $args) use ($session) {
         if (sessionCheck($session)) {
 
-        //$files = $request->getUploadedFiles();
-        //if (empty($files['file'])) {
-        //    throw new Exception('Expected a file');
-        //}
-
-        //$file = $files['file'];
-        // do something with $file
-
             $segment = $session->getSegment('deneb');
 
             $pageData = $request->getParsedBody();
@@ -395,24 +382,7 @@ if (firstRunCheck()) {
     $app->post('/admin/media/upload', function($request, $response, $args) {
 
     });
-/*
-    $app->get('/admin/template/new', function($request, $response, $args) use ($session) {
-        if (sessionCheck($session)) {
-            $navigation = createNavigation(loadPages($this->pagePath), $this->pagePath, true);
 
-            return $this->view->render($response, 'new-template.twig', [
-                'flashError' => $session->getSegment('deneb')->getFlash('flashError'),
-                'navigation' => $navigation,
-                'baseUrl' => $request->getUri()->getBasePath(),
-                'templatePath' => $this->templatePath,
-                'name' => $request->getAttribute('csrf_name'),
-                'value' => $request->getAttribute('csrf_value')
-            ]);
-        } else {
-            return $response->withRedirect($this->router->pathFor('login'), 301);
-        }
-    })->setName('new_template');
-*/
     $app->get('/listpages', function($request, $response, $args) {
         $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator(loadPages($this->pagePath)));
         $reverseNavigation = array();
