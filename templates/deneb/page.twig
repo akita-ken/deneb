@@ -41,6 +41,11 @@
   <div class="ink-grid">
     <div class="column-group">
       <div class="all-85 push-center" id="content-box">
+        {% if meta['displaydate'] == "true" %}
+          {% if meta['date'] is empty %}
+            <span class="fw-300 medium push-right right-space bottom-space"><em>Last updated: xx/yy/zzzz</em></span>
+          {% endif %}
+        {% endif %}
         <h2>{{ meta['header'] }}</h2>
         {{ include(template_from_string(contents)) | markdown }}
       </div>
