@@ -472,7 +472,13 @@ if (firstRunCheck()) {
 
 $app->run();
 
-function fieldValidation($pageData)
+function convertQuotes($text)
+{
+    $converted = str_replace('\"', '\'', $text);
+    return $converted;
+}
+
+function pageFieldValidation($pageData)
 {
     $validationResult = 'valid';
 
