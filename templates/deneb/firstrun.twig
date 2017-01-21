@@ -15,6 +15,14 @@
     </div>
 
     <form class="ink-form" action="firstRun" method="post">
+  {% if flashError is not null %}
+    <div class="column-group half-space">
+      <div class="ink-alert basic error" role="alert">
+        <button class="ink-dismiss">&times;</button>
+        <p>{{ flashError | raw }}</p>
+      </div>
+    </div>
+  {% endif %}
       <div class="column-group">
         <div class="control-group">
           <div class="column-group gutters">
