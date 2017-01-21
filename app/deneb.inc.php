@@ -287,6 +287,40 @@ if (firstRunCheck()) {
                 $pageData['path'] = $this->pagePath . $pageData['path'] . '.md';
                 $pageData['hash'] = hash('crc32b', $pageData['path']);
 
+                if (array_key_exists('delete', $pageData)) {
+                    if ($pageData['delete'] == 'page') {
+
+                        if (deletePage($reverseNavigation[$currentHash])) {
+                            $segment->setFlash('flashSuccess', 'Page deleted successfully');
+
+                            $filePath = $this->uploadPath . '/' . $currentHash;
+                            if (!deleteDirectory($filePath)) {
+                                $segment->setFlash('flashError', 'Failed to delete the page\'s upload folder completely. Check permissions?');
+                            }
+
+                            return $response->withRedirect($this->router->pathFor('admin'), 301);
+                        } else {
+                            $segment->setFlash('flashError', 'Failed to delete page. Check permissions?');
+                            return $response->withRedirect($this->router->pathFor('edit', [
+                                'hash' => $pageData['hash']
+                                ]), 301);
+                        }
+                    } else {
+                        $filePath = $this->uploadPath . '/' . $currentHash . '/' . $pageData['delete'];
+                        if (deleteFile($filePath)) {
+                            $segment->setFlash('flashSuccess', 'File <code>' . $pageData['delete'] .'</code> deleted successfully');
+                            return $response->withRedirect($this->router->pathFor('edit', [
+                                'hash' => $pageData['hash']
+                                ]), 301);
+                        } else {
+                            $segment->setFlash('flashError', 'Unable to delete file. Check permissions?');
+                            return $response->withRedirect($this->router->pathFor('edit', [
+                                'hash' => $pageData['hash']
+                                ]), 301);
+                        }
+                    }
+                }
+
                 if ($files['file']->getSize() == 0) {
                     if (!is_null($pageData['upload'])) {
                         $segment->setFlash('flashWarn', 'No file or zero-length object uploaded');
