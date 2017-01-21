@@ -24,6 +24,7 @@
     {% block footer %}
     {% endblock %}
 
+  {% block snippet %}{{ javascriptSnippet | raw }}{% endblock %}
   </body>
   <script src="{{ asset_path }}/js/ink-all.min.js"></script>
   <script src="{{ asset_path }}/js/autoload.min.js"></script>
