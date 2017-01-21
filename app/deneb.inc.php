@@ -126,7 +126,7 @@ if (firstRunCheck()) {
 
     $app->post('/admin', function($request, $response, $args) use ($session) {
         if (sessionCheck($session)) {
-            $config = new Config_Lite('config.ini', LOCK_EX);
+            $config = new Config_Lite(CONFIG_FILE_PATH);
             $settings = $request->getParsedBody();
             if ($settings['template'] != $this->template) {
                 $container['template'] = $settings['template'];
@@ -505,7 +505,7 @@ function firstRunCheck()
     static $configFileExists = false;
 
     if (!$configFileExists) {
-        if (file_exists('config.ini')) {
+        if (file_exists(CONFIG_FILE_PATH)) {
             $configFileExists = true;
         }
         return $configFileExists;
@@ -804,7 +804,7 @@ function readPage($path)
 
 function doAuthentication($loginDetails)
 {
-  $config = new Config_Lite('config.ini');
+  $config = new Config_Lite(CONFIG_FILE_PATH);
   if (($loginDetails['username'] == $config->get('admin', 'username')) && password_verify($loginDetails['password'], $config->get('admin', 'password'))) {
     return true;
   }
