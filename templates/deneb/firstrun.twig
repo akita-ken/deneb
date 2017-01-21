@@ -7,14 +7,12 @@
 {% endblock %}
 
 {% block content %}
-  <div class="all-50 push-center">
+  <div class="all-50 push-center top-space double-bottom-space">
     <div class="align-center">
-      <h1>deneb</h1>
       <img src="{{ templatePath }}/assets/img/deneb-logo.svg" alt="deneb" class="deneb-logo" />
       <h4>First-run setup</h4>
     </div>
 
-    <form class="ink-form" action="firstRun" method="post">
   {% if flashError is not null %}
     <div class="column-group half-space">
       <div class="ink-alert basic error" role="alert">
