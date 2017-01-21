@@ -7,7 +7,7 @@
 <div class="top-menu">
   <nav class="ink-navigation ink-grid">
     <ul class="menu horizontal black">
-      <li id="kennyl"><a href={% if baseUrl is empty %}/{% else %}{{ baseUrl }}{% endif %}><span class="darkBlue">kennyl</span><span class="lightBlue">.im</span></a></li>
+      {{ headerText | raw }}
       {% block navmenu %}
         {% for linkname, category in navigation %}
           {% if category is not iterable %}
@@ -52,7 +52,7 @@
 {% block footer %}
   <div class="tiny-100 small-100 medium-85 large-85 xlarge-85 push-center">
     <footer>
-      <p class="align-center"><i class="fa fa-info-circle"></i> <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC 4.0</a> | <i class="fa fa-envelope"></i> mailto[at]kennyl[dot]im | <i class=""></p>
+      {{ footerText | raw }}
     </footer>
   </div>
 {% endblock %}
