@@ -47,3 +47,21 @@
 {% block contents %}
   {{ page['contents'] }}
 {% endblock %}
+
+{% block deletePage %}
+  <div class="all-10 left-space"><button type="submit" class="ink-button red" id="deleteConfirmationTrigger">Delete</button></div>
+{% endblock %}
+
+{% block modals %}
+<div class="ink-shade fade">
+  <div id="deleteConfirmation" class="ink-modal fade" data-trigger="#deleteConfirmationTrigger" data-width="20%" data-height="18%" role="dialog" aria-hidden="true" aria-labelled-by="modal-title">
+    <div class="modal-body" id="modalContent">
+      <p class="align-center">Are you sure?</p>
+      <div class="align-center">
+        <button class="ink-dismiss ink-button all-25 push-center red quarter-horizontal-space">No</button>
+        <button type="submit" class="ink-button all-25 push-center green quarter-horizontal-space" name="delete" value="page">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
