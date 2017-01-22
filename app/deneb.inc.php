@@ -998,7 +998,50 @@ function createPath($path)
     return true;
 }
 
+function deletePage($path)
+{
+    $result = true;
+    $result = unlink($path);
+
+    $path = explode('/', $path);
+    $path = array_slice($path, 0, -1);
+    $path = implode('/', $path);
+
+    $iterator = new \FilesystemIterator($path);
+
+    $dirEmpty = !$iterator->valid();
+
+    if ($dirEmpty) {
+        // if previous step failed, a file must exist in the dir, so
+        // this block would not execute, preserving the result anyway
+        $result = rmdir($path);
+    }
+
+    return $result;
+}
+
 function deleteFile($path)
 {
-    
+    return unlink($path);
+}
+
+function deleteDirectory($path)
+{
+    $result = true;
+
+    foreach (glob($path.'/*.*') as $filename) {
+        if (is_file($filename)) {
+            $result = unlink($filename);
+        }
+    }
+
+    $iterator = new \FilesystemIterator($path);
+
+    $dirEmpty = !$iterator->valid();
+
+    if ($dirEmpty) {
+        $result = rmdir($path);
+    }
+
+    return $result;
 }
