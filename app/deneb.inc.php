@@ -844,7 +844,7 @@ function loadPageTemplates($path)
                 if ($file == 'page.twig') {
                     $templates['default'] = $file->getFilename();
                 } else {
-                    $templates[substr($file, 0, -5)] = $file->getFilename;
+                    $templates[substr($file, 0, -5)] = $file->getFilename();
                 }
             }
         }
