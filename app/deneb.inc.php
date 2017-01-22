@@ -578,7 +578,7 @@ if (firstRunCheck()) {
     });
 
     $app->post('/firstRun', function($request, $response, $args) use ($session) {
-        $userDetails = $request->getParsedBody();
+        $pageData = $request->getParsedBody();
         $baseUrl = $request->getUri()->getBasePath();
         if (createAdminUser($userDetails) && configInit()) {
             $segment = $session->getSegment('deneb');
