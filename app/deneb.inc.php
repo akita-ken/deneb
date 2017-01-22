@@ -283,7 +283,7 @@ if (firstRunCheck()) {
 
             unset($pageData['content'], $pageData['csrf_name'], $pageData['csrf_value']);
 
-            $validationResult = fieldValidation($pageData);
+            $validationResult = pageFieldValidation($pageData);
 
             if ($validationResult == 'valid') {
                 $pageData['path'] = $this->pagePath . $pageData['path'] . '.md';
