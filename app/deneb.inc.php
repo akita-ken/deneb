@@ -677,7 +677,7 @@ function firstRunCheck()
 
 function setConfig($session)
 {
-    $config = new Config_Lite('config.ini', LOCK_EX);
+    $config = new Config_Lite(CONFIG_FILE_PATH, LOCK_EX);
 
     $template = $config->get('application', 'template', false);
 
