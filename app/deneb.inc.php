@@ -1028,7 +1028,7 @@ function createPath($path)
 {
     // check if path exists and create if it doesn't
     if (!file_exists($path)) {
-        return mkdir($path, 0777, true);
+        return mkdir($path, 0755, true);
     } else {
         if (!is_dir($path)) {
             return false;
