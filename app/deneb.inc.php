@@ -566,16 +566,19 @@ if (firstRunCheck()) {
     createRoutes(loadPages($container->pagePath), $app, $container->pagePath);
 
 } else {
-    $app->get('/', function($request, $response, $args) {
+    $app->get('/', function($request, $response, $args) use ($session) {
         $baseUrl = $request->getUri()->getBasePath();
+        $segment = $session->getSegment('deneb');
 
         return $this->view->render($response, 'firstrun.twig', [
             'baseUrl' => $baseUrl,
             'name' => $request->getAttribute('csrf_name'),
             'value' => $request->getAttribute('csrf_value'),
-            'templatePath' => $this->templatePath
+            'templatePath' => $this->templatePath,
+            'pageData' => $segment->getFlash('firstRunForm'),
+            'flashError' => $segment->getFlash('flashError')
         ]);
-    });
+    })->setName('setup');
 
     $app->post('/firstRun', function($request, $response, $args) use ($session) {
         $pageData = $request->getParsedBody();
