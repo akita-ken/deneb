@@ -726,12 +726,12 @@ function setConfig($session)
 
 function createAdminUser($userDetails)
 {
-    $config = new Config_Lite('config.ini');
+    $config = new Config_Lite(CONFIG_FILE_PATH);
 
     $config->set('admin', 'username', $userDetails['username'])
         ->set('admin', 'password', password_hash($userDetails['password'], PASSWORD_DEFAULT))
         ->set('admin', 'email', $userDetails['email'])
-        ->set('admin', 'displayname', $userDetails['displayname']);
+        ->set('admin', 'displayName', $userDetails['displayName']);
 
     $config->save();
 
