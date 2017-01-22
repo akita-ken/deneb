@@ -591,10 +591,10 @@ if (firstRunCheck()) {
 
             return $response->withRedirect($baseUrl . '/admin', 301);
         } else {
-            return $this->view->render($response, 'error.twig', [
-                'baseUrl' => $request->getUri()->getBasePath(),
-                'templatePath' => $this->templatePath
-            ]);
+            $segment->setFlash('firstRunForm', $pageData);
+            $segment->setFlash('flashError', $validationResult);
+
+            return $response->withRedirect($this->router->pathFor('setup'), 301);
         }
     });
 }
