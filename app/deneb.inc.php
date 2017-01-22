@@ -738,15 +738,43 @@ function createAdminUser($userDetails)
     return true;
 }
 
-function configInit()
+function setupFieldValidation($pageData)
 {
-    $config = new Config_Lite('config.ini');
+    $validationResult = 'valid';
 
-    $config->set('application', 'template', 'deneb');
+    if (in_array('', $pageData)) {
+        if ($validationResult == 'valid') {
+            $validationResult = '<li>All fields are required</li>';
+        } else {
+            $validationResult .= '<li>All fields are required</li>';
+        }
+    }
 
-    $config->save();
+    if ($pageData['password'] != $pageData['confirm']) {
+        if ($validatioResult == 'valid') {
+            $validationResult = '<li>Passwords do not match</li>';
+        } else {
+            $validationResult .= '<li>Passwords do not match</li>';
+        }
+    }
 
-    return true;
+    if (strpos($pageData['configPath'], $_SERVER['DOCUMENT_ROOT']) !== false) {
+        if ($validationResult == 'valid') {
+            $validationResult = '<li>Configuration file path cannot be in the document root</li>';
+        } else {
+            $validationResult .= '<li>Configuration file path cannot be in the document root</li>';
+        }
+    } else {
+        if (!is_writable($pageData['configPath'])) {
+            if ($validationResult == 'valid') {
+                $validationResult = '<li>Configuration file path is not writable, please set permissions</li>';
+            } else {
+                $validationResult .= '<li>Configuration file path is not writable, please set permissions</li>';
+            }
+        }
+    }
+
+    return $validationResult;
 }
 
 function loadPages($path)
