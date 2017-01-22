@@ -21,5 +21,5 @@
             "email": "myself@akita-ken.net"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }
