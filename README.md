@@ -11,7 +11,7 @@ Built on the [Slim Microframework](http://www.slimframework.com) and implementin
 
 * Nginx or Apache with mod_rewrite
 * PHP 5.5.0 or later
-* [Composer](https://getcomposer.org/):
+* [Composer](https://getcomposer.org/)
 
 ## Installation
 Clone the repo into your server's document root (or wherever you want it to be), and then do a
