@@ -857,18 +857,25 @@ function createRoutes($pages, $app, $pagePath)
     $javascriptSnippet = $config->get('template', 'javascriptSnippet', false);
 
     $javascriptSnippet = str_replace('{{ templatePath }}', $app->getContainer()->templatePath, $javascriptSnippet);
+
     foreach ($pages as $pageName => $path) {
         if (!is_array($path)) {
             if ($path == 'pages/index.md') {
-                $app->get('/', function($request, $response, $args) use ($path, $navigation) {
+                $app->get('/', function($request, $response, $args) use ($path, $navigation, $headerText, $footerText, $javascriptSnippet) {
                     $page = readPage($path);
                     $filePath = $this->uploadPath . '/' . $page['meta']['hash'];
+                    $headerText = str_replace('{{ baseUrl }}', $request->getUri()->getBasePath(), $headerText);
+                    $javascriptSnippet = str_replace('{{ baseUrl }}', $request->getUri()->getBasePath(), $javascriptSnippet);
+
                     return $this->view->render($response, $this->pageTemplates[$page['meta']['template']], [
                         'baseUrl' => $request->getUri()->getBasePath(),
                         'templatePath' => $this->templatePath,
                         'navigation' => $navigation,
                         'meta' => $page['meta'],
                         'files' => loadFiles($filePath),
+                        'headerText' => $headerText,
+                        'footerText' => $footerText,
+                        'javascriptSnippet' => $javascriptSnippet,
                         'contents' => $page['contents']
                         ]);
                 })->setName('index');
@@ -877,15 +884,19 @@ function createRoutes($pages, $app, $pagePath)
                         return $response->withRedirect($this->router->pathFor('index'), 301);
                 });
             } else {
-                $app->get(substr($path, 5, -3), function($request, $response, $args) use ($path, $navigation) {
+                $app->get(substr($path, 5, -3), function($request, $response, $args) use ($path, $navigation, $headerText, $footerText) {
                     $page = readPage($path);
                     $filePath = $this->uploadPath . '/' . $page['meta']['hash'];
+                    $headerText = str_replace('{{ baseUrl }}', $request->getUri()->getBasePath(), $headerText);
                     return $this->view->render($response, $this->pageTemplates[$page['meta']['template']], [
                         'templatePath' => $this->templatePath,
                         'baseUrl' => $request->getUri()->getBasePath(),
                         'navigation' => $navigation,
                         'meta' => $page['meta'],
                         'files' => loadFiles($filePath),
+                        'headerText' => $headerText,
+                        'footerText' => $footerText,
+                        'javascriptSnippet' => $javascriptSnippet,
                         'contents' => $page['contents']
                     ]);
                 });
