@@ -675,6 +675,38 @@ function firstRunCheck()
     }
 }
 
+function configInit($path)
+{
+    global $container;
+
+    $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'config.ini';
+
+    $fp = fopen('configPath.php', 'w');
+
+    $configPathFileString = '<?php
+        define(\'CONFIG_FILE_PATH\', \'' . $path . '\');
+?>';
+
+    // we need to explicity define CONFIG_FILE_PATH here anyway
+    // because the configPath.php would have already been included with old/empty data
+    define('CONFIG_FILE_PATH', $path);
+
+    fwrite($fp, $configPathFileString);
+    fclose($fp);
+
+    $config = new Config_Lite($path);
+
+    $config->set('application', 'template', 'deneb');
+
+    $config->set('template', 'headerText', "<li><a class='borderless-grid' href='{{ baseUrl }}'> <img class='deneb-logo-nav' src='{{ templatePath }}/assets/img/deneb-logo.svg' alt='deneb' /></a></li>");
+
+    $config->set('template', 'footerText', "<p class='align-center'>Powered by <a href='#'>deneb</a> | Distributed under the <a href='#'>Apache 2.0</a> license</p>");
+
+    $config->save();
+
+    return true;
+}
+
 function setConfig($session)
 {
     $config = new Config_Lite(CONFIG_FILE_PATH, LOCK_EX);
