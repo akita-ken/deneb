@@ -281,6 +281,10 @@ if (firstRunCheck()) {
 
             $content = $pageData['content'];
 
+            $currentHash = $pageData['hash'];
+
+            $reverseNavigation = createReverseNavigation(loadPages($this->pagePath));
+
             unset($pageData['content'], $pageData['csrf_name'], $pageData['csrf_value']);
 
             $validationResult = pageFieldValidation($pageData);
@@ -342,26 +346,50 @@ if (firstRunCheck()) {
                 }
 
                 if ($currentPath != $pageData['path']) {
-                    if (!unlink($currentPath)) {
+                    $path = explode('/', $pageData['path']);
+
+                    if (count($path) > 3) {
+                        $segment->setFlash('createForm', $pageData);
+                        $segment->setFlash('flashError', 'At the moment, deneb only supports maximum of 2 levels of nesting');
+                        $session->commit();
+                        return $response->withRedirect($this->router->pathFor('edit', [
+                            'hash' => $currentHash
+                            ]), 301);
+                    } else {
+                        $path = array_slice($path, 0, -1);
+                        $path = implode('/', $path);
+
+                        if (createPath($path)) {
+                            writePage($pageData, $content);
+                        } else {
+                            $segment->setFlash('flashError', 'Unable to create file path. Possible causes: <li>An existing file/directory with the same name</li><li>Permissions not set properly</li>');
+                            $session->commit();
+                            return $response->withRedirect($this->router->pathFor('edit', [
+                            'hash' => $currentHash
+                            ]), 301);
+                        }
+                    }
+
+                    if (!deletePage($currentPath)) {
                         $segment->setFlash('flashError', 'Unable to remove old file:' . $currentPath);
                         $session->commit();
                         return $response->withRedirect($this->router->pathFor('edit', [
-                            'hash' => $pageData['hash']
+                            'hash' => $currentHash
                         ]), 301);
                     }
+                } else {
+                    writePage($pageData, $content);
                 }
-
-                writePage($pageData, $content);
 
                 $segment->setFlash('flashSuccess', 'Page edited successfully');
                 $session->commit();
 
-                if (is_null($pageData['upload'])) {
+                if (!array_key_exists('upload', $pageData)) {
                     return $response->withRedirect($this->router->pathFor('admin'), 301);
                 } else {
-                return $response->withRedirect($this->router->pathFor('edit', [
-                    'hash' => $pageData['hash']
-                ]), 301);
+                    return $response->withRedirect($this->router->pathFor('edit', [
+                        'hash' => $pageData['hash']
+                    ]), 301);
                 }
             } else {
                 $segment->setFlash('flashError', $validationResult);
@@ -413,22 +441,40 @@ if (firstRunCheck()) {
                     }
                 }
 
-                writePage($pageData, $content);
+                $path = explode('/', $pageData['path']);
 
-                if (is_null($pageData['upload'])) {
+                if (count($path) > 3) {
+                    $segment->setFlash('createForm', $pageData);
+                    $segment->setFlash('flashError', 'At the moment, deneb only supports maximum of 2 levels of nesting');
+                    $session->commit();
+                    return $response->withRedirect($this->router->pathFor('new'), 301);
+                } else {
+                    $path = array_slice($path, 0, -1);
+                    $path = implode('/', $path);
+
+                    if (createPath($path)) {
+                        writePage($pageData, $content);
+                    } else {
+                        $segment->setFlash('flashError', 'Unable to create file path. Possible causes: <li>An existing file/directory with the same name</li><li>Permissions not set properly</li>');
+                        $session->commit();
+                        return $response->withRedirect($this->router->pathFor('new'), 301);
+                    }
+                }
+
+                if (!array_key_exists('upload', $pageData)) {
                     $segment->setFlash('flashSuccess', 'Page created successfully');
                     $session->commit();
                     return $response->withRedirect($this->router->pathFor('admin'), 301);
                 } else {
-                return $response->withRedirect($this->router->pathFor('edit', [
-                    'hash' => $pageData['hash']
-                ]), 301);
+                    return $response->withRedirect($this->router->pathFor('edit', [
+                        'hash' => $pageData['hash']
+                    ]), 301);
                 }
             } else {
-                $segment->set('createForm', $pageData);
+                $segment->setFlash('createForm', $pageData);
                 $segment->setFlash('flashError', $validationResult);
 
-                $session->commit();
+                //$session->commit();
                 return $response->withRedirect($this->router->pathFor('new'), 301);
             }
         } else {
