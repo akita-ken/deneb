@@ -580,9 +580,13 @@ if (firstRunCheck()) {
     $app->post('/firstRun', function($request, $response, $args) use ($session) {
         $pageData = $request->getParsedBody();
         $baseUrl = $request->getUri()->getBasePath();
-        if (createAdminUser($userDetails) && configInit()) {
-            $segment = $session->getSegment('deneb');
-            $segment->set('username', $userDetails['username']);
+        $segment = $session->getSegment('deneb');
+        $validationResult = setupFieldValidation($pageData);
+
+        if ($validationResult == 'valid') {
+            configInit($pageData['configPath']);
+            createAdminUser($pageData);
+            $segment->set('username', $pageData['username']);
             $segment->set('auth', true);
             $session->commit();
 
