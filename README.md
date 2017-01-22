@@ -1,7 +1,7 @@
 # Deneb
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Version](https://img.shields.io/badge/release-v0.1.0-blue.svg)]
+![Version](https://img.shields.io/badge/release-v0.1.0-blue.svg)
 
 A simple flat-file content management system written in PHP.
 
@@ -15,10 +15,12 @@ Built on the [Slim Microframework](http://www.slimframework.com) and implementin
 ## Installation
 Either:
 * Clone the repo into your server's document root (or wherever you want it to be)
-or if you're using [Composer](https://getcomposer.org/):
-`composer require akita-ken/deneb`
 
-# Documentation
+or if you're using [Composer](https://getcomposer.org/):
+
+`composer require "akita-ken/deneb":"v0.1.0"`
+
+## Documentation
 Coming soon
 
 ## Additional information
