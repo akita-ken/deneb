@@ -328,7 +328,7 @@ if (firstRunCheck()) {
                 }
 
                 if ($files['file']->getSize() == 0) {
-                    if (!is_null($pageData['upload'])) {
+                    if (array_key_exists('upload', $pageData)) {
                         $segment->setFlash('flashWarn', 'No file or zero-length object uploaded');
                     }
                 } else {
@@ -424,7 +424,7 @@ if (firstRunCheck()) {
                 $pageData['hash'] = hash('crc32b', $pageData['path']);
 
                 if ($files['file']->getSize() == 0) {
-                    if (!is_null($pageData['upload'])) {
+                    if (array_key_exists('upload', $pageData)) {
                         $segment->setFlash('flashWarn', 'No file or zero-length object uploaded');
                     }
                 } else {
