@@ -336,7 +336,7 @@ if (firstRunCheck()) {
                         $filePath = $this->uploadPath . '/' . $pageData['hash'];
                         if (createPath($filePath)) {
                             $files['file']->moveTo($filePath . '/' . $files['file']->getClientFilename());
-                            $segment->setFlash('flashInfo', 'File ' . $files['file']->getClientFilename() . ' uploaded');
+                            $segment->setFlash('flashInfo', 'File <code>' . $files['file']->getClientFilename() . '</code> uploaded');
                         } else {
                             $segment->setFlash('flashError', 'Unable to create file path');
                         }
