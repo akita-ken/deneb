@@ -1,6 +1,6 @@
 {% extends "page.twig" %}
 
-{% block title %}{% endblock %}
+{% block title %}Administration - deneb{% endblock %}
 
 {% block navmenu %}
   <li class="right"><a href="{{ baseUrl }}/logout">Logout</a></li>
@@ -91,7 +91,7 @@
           {% endif %}
 
           <form action="{{ baseUrl }}/admin" method="post" class="ink-form right-space">
-            <div class="control-group column-group gutters">
+            <div class="control-group column-group horizontal-gutters">
               <label for="active-template" class="all-25 align-right">Active template</label>
               <div class="control all-30">
                 <select name="template">
@@ -103,6 +103,30 @@
                     >{{ template }}</option>
                   {% endfor %}
                 </select>
+              </div>
+            </div>
+
+            <div class="control-group column-group horizontal-gutters">
+              <label for="header-text" class="all-25 align-right">Header text</label>
+              <div class="control all-50">
+                <textarea class="code-text" name="header-text" rows="3">{{ headerTextRaw }}</textarea>
+                <p class="tip">This appears in the top-left hand corner.</p>
+              </div>
+            </div>
+
+            <div class="control-group column-group horizontal-gutters">
+              <label for="footer-text" class="all-25 align-right">Footer text</label>
+              <div class="control all-50">
+                <textarea class="code-text" name="footer-text" rows="3">{{ footerTextRaw }}</textarea>
+                <p class="tip">This appears centered at the bottom of the page.</p>
+              </div>
+            </div>
+
+            <div class="control-group column-group horizontal-gutters">
+              <label for="javascript-snippet" class="all-25 align-right">Javascript snippet</label>
+              <div class="control all-50">
+                <textarea class="code-text" name="javascript-snippet" rows="3">{{ javascriptSnippetRaw }}</textarea>
+                <p class="tip">This is included on every page just before the <code>&lt;/body&gt;</code> tag. Useful for things like Google Analytics.</p>
               </div>
             </div>
 
@@ -121,4 +145,7 @@
 {% endblock %}
 
 {% block footer %}
+{% endblock %}
+
+{% block snippet %}
 {% endblock %}

@@ -30,7 +30,7 @@
     <div class="column-group half-space">
       <div class="ink-alert basic success" role="alert">
         <button class="ink-dismiss">&times;</button>
-        <p>{{ flashSuccess }}</p>
+        <p>{{ flashSuccess | raw }}</p>
       </div>
     </div>
   {% endif %}
@@ -48,7 +48,7 @@
     <div class="column-group half-space">
       <div class="ink-alert basic warning" role="alert">
         <button class="ink-dismiss">&times;</button>
-        <ul>{{ flashWarn }}</ul>
+        <p>{{ flashWarn | raw }}</p>
       </div>
     </div>
   {% endif %}
@@ -57,7 +57,7 @@
     <div class="column-group half-space">
       <div class="ink-alert basic info" role="alert">
         <button class="ink-dismiss">&times;</button>
-        <ul>{{ flashInfo }}</ul>
+        <p>{{ flashInfo | raw }}</p>
       </div>
     </div>
   {% endif %}
@@ -65,53 +65,60 @@
   <form action="{{ baseUrl }}{% block formAction %}/admin/create{% endblock %}" enctype="multipart/form-data" method="post" class="ink-form">
     <div class="column-group horizontal-gutters">
       <div class="all-60">
-        <div class="control-group column-group quarter-gutters required">
+        <div class="control-group column-group quarter-horizontal-gutters required">
             <label for="path" class="all-33 align-right">URL Path</label>
             <div class="control all-66">
-              <input type="text" name="path" id="path" {% block pathValue %}{% endblock %} />
+              <input type="text" name="path" id="path" {% block pathValue %}{% if createForm is not null %}value="{{ createForm['path'] }}"{% endif %}{% endblock %}/>
               <input type="hidden" name="hash" value="{{ hash }}" />
+              <p class="small tip">This is where the page resides in the directory structure, and will consequently be how the URL route will be created. Note: deneb currently only supports up to 2 layers of nesting, and will reject a path that contains more than that</p>
             </div>
         </div>
 
-        <div class="control-group column-group quarter-gutters required">
+        <div class="control-group column-group quarter-horizontal-gutters required">
             <label for="linkname" class="all-33 align-right">Linkname</label>
             <div class="control all-66">
-              <input type="text" name="linkname" id="linkname" {% block linknameValue %}{% endblock %} />
+              <input type="text" name="linkname" id="linkname" {% block linknameValue %}{% if createForm is not null %}value="{{ createForm['linkname'] }}"{% endif %}{% endblock %} />
+              <p class="small tip">Name that will be used in the automatically generated navigation bar</p>
             </div>
         </div>
 
-        <div class="control-group column-group quarter-gutters">
+        <div class="control-group column-group quarter-horizontal-gutters">
           <label for="title" class="all-33 align-right">Title</label>
           <div class="control all-66">
-            <input type="text" name="title" id="title" {% block titleValue %}{% endblock %} />
+            <input type="text" name="title" id="title" {% block titleValue %}{% if createForm is not null %}value="{{ createForm['title'] }}"{% endif %}{% endblock %} />
+            <p class="small tip">Sets the <code>&lt;title&gt;</code> of the page</p>
           </div>
         </div>
 
-        <div class="control-group column-group quarter-gutters">
+        <div class="control-group column-group quarter-horizontal-gutters">
           <label for="header" class="all-33 align-right">Header</label>
           <div class="control all-66">
-            <input type="text" name="header" id="header" {% block headerValue %}{% endblock %} />
+            <input type="text" name="header" id="header" {% block headerValue %}{% if createForm is not null %}value="{{ createForm['header'] }}"{% endif %}{% endblock %} />
+            <p class="small tip">Appears as a &lt;h1&gt; on the page itself</p>
           </div>
         </div>
 
-        <div class="control-group column-group quarter-gutters">
+        <div class="control-group column-group quarter-horizontal-gutters">
           <label for="date" class="all-33 align-right">Date</label>
           <div class="control all-66">
-            <input type="date" name="date" id="date" {% block dateValue %}{% endblock %} />
+            <input type="date" name="date" id="date" {% block dateValue %}{% if createForm is not null %}value="{{ createForm['header'] }}"{% endif %}{% endblock %} />
+            <p class="small tip">Used as the 'last updated' date tag on the page if 'display date' is enabled</p>
           </div>
         </div>
 
-        <div class="control-group column-group quarter-gutters">
+        <div class="control-group column-group quarter-horizontal-gutters">
           <label for="description" class="all-33 align-right">Description</label>
           <div class="control all-66">
-            <input type="text" name="description" id="description" {% block descriptionValue %}{% endblock %} />
+            <input type="text" name="description" id="description" {% block descriptionValue %}{% if createForm is not null %}value="{{ createForm['description'] }}"{% endif %}{% endblock %} />
+            <p class="small tip">Used in <code>&lt;meta&gt;</code> and other relevant tags for SEO</p>
           </div>
         </div>
 
         <div class="control-group column-group quarter-gutters">
           <label for="category" class="all-33 align-right">Category</label>
           <div class="control all-66">
-            <input type="text" name="category" id="category" {% block categoryValue %}{% endblock %} />
+            <input type="text" name="category" id="category" {% block categoryValue %}{% if createForm is not null %}value="{{ createForm['category'] }}"{% endif %}{% endblock %} />
+            <p class="small tip">Currently only used for generating badges on the admin interface, leave blank for an 'Uncategorised' badge</p>
           </div>
         </div>
       </div>
@@ -120,12 +127,12 @@
         <p>Media</p>
         <ul>
           {% for file in files | keys %}
-            <li>{{ file }}</li>
+            <li>{{ file }} [<button type="submit" class="text-button fw-900" name="delete" value="{{ file }}">X</button>]</li>
           {% endfor %}
         </ul>
         <input type="file" name="file" />
         <div class="column-group top-space">
-          <input type="submit" class="ink-button blue" name="upload" value="Upload" />
+          <button type="submit" class="ink-button blue" name="upload" value="Upload">Upload</button>
         </div>
       </div>
     </div>
@@ -135,16 +142,22 @@
       <select class="control all-20 inline quarter-horizontal-space no-top-margin" name="template">
         {% for template in templates|keys %}
           <option value="{{ template }}"
-            {% if template == activeTemplate %}
-              selected
+            {% if createForm is not null %}
+              {% if template == createForm['template'] %}
+                selected
+              {% endif %}
+            {% else %}
+              {% if template == activeTemplate %}
+                selected
+              {% endif %}
             {% endif %}
           >{{ template }}</option>
         {% endfor %}
       </select>
       <p class="label all-20 align-right">Display date?</p>
       <ul class="control unstyled all-20 inline no-top-margin quarter-horizontal-space">
-        <li><input type="radio" id="yes" name="displaydate" value="true"><label for="yes" {% block displayDateTrue %}{% endblock %}>Yes</label></li>
-        <li><input type="radio" id="no" name="displaydate" value="false"><label for="no" {% block displayDateFalse %}{% endblock %}>No</label></li>
+        <li><input type="radio" id="yes" name="displaydate" value="true" {% block displayDateTrue %}{% if createForm is not null %}{% if createForm['displaydate'] == 'true' %}checked="checked"{% endif %}{% else %}checked="checked"{% endif %}{% endblock %}><label for="yes">Yes</label></li>
+        <li><input type="radio" id="no" name="displaydate" value="false" {% block displayDateFalse %}{% if createForm is not null %}{% if createForm['displaydate'] == 'false' %}checked="checked"{% endif %}{% endif %}{% endblock %}><label for="no">No</label></li>
       </ul>
     </div>
 
@@ -161,11 +174,11 @@
     </div>
 
     <div class="column-group quarter-gutters">
-      <div class="all-90">
+      <div class="all-95">
+        {% block deletePage %}{% endblock %}
         <button type="submit" class="ink-button green push-right">Submit</button>
       </div>
     </div>
-
-
+    {% block modals %}{% endblock %}
   </form>
 {% endblock %}

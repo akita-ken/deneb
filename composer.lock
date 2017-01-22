@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "67b8beb78f34092fb82cd885d85d11af",
-    "content-hash": "41db58b2066c8edb9333edae32727e15",
+    "hash": "40f5883e59144008be2db9e146cfefd4",
+    "content-hash": "3c2929b818f08170bf202a75cbf24b01",
     "packages": [
         {
             "name": "aptoma/twig-markdown",
@@ -339,16 +339,16 @@
         },
         {
             "name": "nikic/fast-route",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/FastRoute.git",
-                "reference": "8ea928195fa9b907f0d6e48312d323c1a13cc2af"
+                "reference": "f3dcf5130e634b6123d40727d612ec6aa4f61fb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/8ea928195fa9b907f0d6e48312d323c1a13cc2af",
-                "reference": "8ea928195fa9b907f0d6e48312d323c1a13cc2af",
+                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/f3dcf5130e634b6123d40727d612ec6aa4f61fb3",
+                "reference": "f3dcf5130e634b6123d40727d612ec6aa4f61fb3",
                 "shasum": ""
             },
             "require": {
@@ -378,7 +378,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2016-06-12 19:08:51"
+            "time": "2016-10-20 17:36:47"
         },
         {
             "name": "paragonie/random_compat",
@@ -429,33 +429,45 @@
             "time": "2016-03-18 20:34:03"
         },
         {
-            "name": "pear-pear.php.net/Config_Lite",
-            "version": "0.2.4",
+            "name": "pear/config_lite",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Config_Lite.git",
+                "reference": "60357d87b77075070e67c3f2aab14702da0ee2bf"
+            },
             "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/Config_Lite-0.2.4.tgz",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Config_Lite/zipball/60357d87b77075070e67c3f2aab14702da0ee2bf",
+                "reference": "60357d87b77075070e67c3f2aab14702da0ee2bf",
+                "shasum": ""
             },
-            "require": {
-                "php": ">=5.2.0.0"
+            "require-dev": {
+                "phpunit/phpunit": "*"
             },
-            "replace": {
-                "pear-pear/config_lite": "== 0.2.4.0"
-            },
-            "type": "pear-library",
+            "type": "library",
             "autoload": {
-                "classmap": [
-                    ""
-                ]
+                "psr-0": {
+                    "": "./"
+                }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
-                "/"
+                "./"
             ],
             "license": [
-                "PHP License"
+                "PHP-3.0"
             ],
-            "description": "This package defines a class for config/settings text files in ini style.\n\t\tCurrently classes available are:\n\t\t* Config_Lite: a class with arrayaccess to handle ini style files\n\t\t* Config_Lite_Exception: Interface implemented by Exceptions"
+            "authors": [
+                {
+                    "name": "Patrick C. Engel",
+                    "email": "pce@php.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "Lightweight package for ini style configuration/settings text files",
+            "homepage": "http://pear.php.net/package/Config_Lite",
+            "time": "2016-12-14 12:49:12"
         },
         {
             "name": "pimple/pimple",
@@ -605,16 +617,16 @@
         },
         {
             "name": "slim/slim",
-            "version": "3.6.0",
+            "version": "3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim.git",
-                "reference": "a685fe91a9435e1432e8eeb7cf516e2f5cee7f64"
+                "reference": "4254e40d81559e35cdf856bcbaca5f3af468b7ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim/zipball/a685fe91a9435e1432e8eeb7cf516e2f5cee7f64",
-                "reference": "a685fe91a9435e1432e8eeb7cf516e2f5cee7f64",
+                "url": "https://api.github.com/repos/slimphp/Slim/zipball/4254e40d81559e35cdf856bcbaca5f3af468b7ef",
+                "reference": "4254e40d81559e35cdf856bcbaca5f3af468b7ef",
                 "shasum": ""
             },
             "require": {
@@ -664,14 +676,14 @@
                 }
             ],
             "description": "Slim is a PHP micro framework that helps you quickly write simple yet powerful web applications and APIs",
-            "homepage": "http://slimframework.com",
+            "homepage": "https://slimframework.com",
             "keywords": [
                 "api",
                 "framework",
                 "micro",
                 "router"
             ],
-            "time": "2016-11-20 20:48:49"
+            "time": "2016-12-20 20:30:47"
         },
         {
             "name": "slim/twig-view",
@@ -725,16 +737,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.28.2",
+            "version": "v1.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "b22ce0eb070e41f7cba65d78fe216de29726459c"
+                "reference": "c6ff71094fde15d12398eaba029434b013dc5e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b22ce0eb070e41f7cba65d78fe216de29726459c",
-                "reference": "b22ce0eb070e41f7cba65d78fe216de29726459c",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/c6ff71094fde15d12398eaba029434b013dc5e59",
+                "reference": "c6ff71094fde15d12398eaba029434b013dc5e59",
                 "shasum": ""
             },
             "require": {
@@ -747,7 +759,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.28-dev"
+                    "dev-master": "1.30-dev"
                 }
             },
             "autoload": {
@@ -782,15 +794,19 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-11-23 18:41:40"
+            "time": "2016-12-23 11:06:22"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "RC",
+    "stability-flags": {
+        "pear/config_lite": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=4.0.0"
+    },
     "platform-dev": []
 }

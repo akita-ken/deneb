@@ -5,19 +5,23 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'NotoSans';
-  src: url('../fonts/NotoSans-Bold.ttf');
-  font-weight: 700;
-  font-style: normal;
+/* logo-specific styling */
+.deneb-logo {
+  width: 240px;
 }
 
-@font-face {
-  font-family: 'NotoSans';
-  src: url('../fonts/NotoSans-Regular.ttf');
-  font-weight: 400;
-  font-style: normal;
+.deneb-logo-nav {
+  height: 55px;
 }
+
+.deneb-font {
+  font-family: 'Raleway';
+}
+
+.deneb-blue {
+  color: #0088e5;
+}
+
 /* this doesn't seem important
 .wrap {
   min-height: 100%;
@@ -43,10 +47,10 @@ html, body {
   height: 100%;
 }
 
-/* background */
+/* template-specific styling */
 
-body {
-  background-image: url('/templates/deneb/assets/img/sl.png'), url('/deneb/templates/deneb/assets/img/sl.png');
+.panel {
+  background-color: #e5e5e4;
 }
 
 #sidebar {
@@ -113,7 +117,7 @@ body {
 /* utility classes */
 
 .borderless-grid {
-  padding: 0;
+  padding: 0 !important;
 }
 
 .right {
@@ -122,4 +126,23 @@ body {
 
 .no-top-margin {
   margin-top: 0;
+}
+
+textarea.code-text {
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+.small {
+  font-size: 0.75rem !important;
+}
+
+.text-button
+{
+    display: inline;
+    background-color: Transparent;
+    text-decoration: none;
+    color: #e82c0c;
+    cursor: pointer;
+    border:0
 }
