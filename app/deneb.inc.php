@@ -895,36 +895,7 @@ function createRoutes($pages, $app, $pagePath)
         }
     }
 }
-/*
-function createSiteNavigation($pages)
-{
-    $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($pages));
-    $navigation = array();
 
-    foreach ($iterator as $leafKey => $leafValue) {
-        $keys = array();
-        $meta = readMeta($leafValue);
-
-        $path = '/'; // we start off with the root
-
-        if (!array_key_exists($meta['category'], $navigation)) {
-            $navigation[$meta['category']] = array();
-        }
-
-        if ($iterator->getDepth() == 0) {
-            $navigation[$meta['category']][] = $meta['linkname'] . '\\' . $path;
-        } else {
-            foreach (range(0, $iterator->getDepth() - 1) as $depth) {
-                $keys[] = $iterator->getSubIterator($depth)->key();
-            }
-
-            $path = '/'.join('/', $keys);
-            $navigation[$meta['category']][] = $meta['linkname'] . '\\' . $path;
-        }
-    }
-    return $navigation;
-}
-*/
 function createNavigation($pages, $pagePath, $index = false)
 {
     $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($pages));
