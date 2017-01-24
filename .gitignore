@@ -8,8 +8,6 @@ pages/*
 uploads/*
 
 ### deneb Templates ###
-## ignore templates until we generic-ise the current one ##
-templates/*
 
 ### Twig PHP ###
 cache/
