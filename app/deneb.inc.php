@@ -841,7 +841,7 @@ function loadTemplates($path = 'templates', $depth = 0)
 function loadPageTemplates($path)
 {
     $templates = array();
-    $exclude = [".DS_Store", ".", "..", "Desktop.ini", "Thumbs.db", "admin.twig", "base.twig", "edit.twig", "login.twig", "new.twig", "firstrun.twig"];
+    $exclude = [".DS_Store", ".", "..", "Desktop.ini", "Thumbs.db", "admin.twig", "base.twig", "edit.twig", "login.twig", "new.twig", "firstrun.twig", "stats.twig"];
 
     $dir = new DirectoryIterator($path);
 
