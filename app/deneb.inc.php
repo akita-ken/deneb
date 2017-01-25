@@ -38,7 +38,7 @@ $container['pagePath'] = 'pages';
 $container['uploadPath'] = 'uploads';
 
 // Set default template
-$container['template'] = 'deneb';
+$container['template'] = getApplicationSettings('template');
 
 // Set template path service
 $container['templatePath'] = function($c) {
@@ -1091,3 +1091,11 @@ function deleteDirectory($path)
 
     return $result;
 }
+
+function getApplicationSettings($attribute)
+{
+    $config = new Config_Lite(CONFIG_FILE_PATH);
+
+    return $config->get('application', $attribute, 'deneb');
+}
+
