@@ -612,7 +612,7 @@ $app->run();
 
 function convertQuotes($text)
 {
-    $converted = str_replace('\"', '\'', $text);
+    $converted = str_replace('"', '\'', $text);
     return $converted;
 }
 
