@@ -919,7 +919,7 @@ function createRoutes($pages, $app, $pagePath)
                         return $response->withRedirect($this->router->pathFor('index'), 301);
                 });
             } else {
-                $app->get(substr($path, 5, -3), function($request, $response, $args) use ($path, $navigation, $headerText, $footerText) {
+                $app->get(substr($path, 5, -3), function($request, $response, $args) use ($path, $navigation, $headerText, $footerText, $javascriptSnippet) {
                     $page = readPage($path);
                     $filePath = $this->uploadPath . '/' . $page['meta']['hash'];
                     $headerText = str_replace('{{ baseUrl }}', $request->getUri()->getBasePath(), $headerText);
