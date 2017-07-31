@@ -3,6 +3,7 @@
 ### deneb Pages ###
 pages/*
 !pages/index.md
+app/configPath.php
 
 ### deneb Uploads ###
 uploads/*
