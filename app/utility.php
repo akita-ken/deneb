@@ -163,9 +163,9 @@ function setupFieldValidation($pageData)
     } else {
         if (!is_writable($pageData['configPath'])) {
             if ($validationResult == 'valid') {
-                $validationResult = '<li>Configuration file path is not writable, please set permissions</li>';
+                $validationResult = '<li>Configuration file path (' . $pageData['configPath'] . ') is not writable</li>';
             } else {
-                $validationResult .= '<li>Configuration file path is not writable, please set permissions</li>';
+                $validationResult .= '<li>Configuration file path (' . $pageData['configPath'] . ') is not writable</li>';
             }
         }
     }
