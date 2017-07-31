@@ -481,3 +481,15 @@ function deleteDirectory($path)
 
     return $result;
 }
+ 
+function getApplicationSettings($attribute) 
+{
+    if (defined("CONFIG_FILE_PATH")) {
+        $config = new Config_Lite(CONFIG_FILE_PATH); 
+        // fall-back on default template if not set
+        return $config->get('application', $attribute, 'deneb'); 
+    } else {
+        return 'deneb'; // we must set the default template manually if there is no config.ini
+    }
+} 
+ 
