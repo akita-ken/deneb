@@ -62,10 +62,9 @@ function firstRunCheck()
 {
     static $configFileExists = false;
 
-    if (!$configFileExists) {
-        if (file_exists(CONFIG_FILE_PATH)) {
-            $configFileExists = true;
-        }
+    if (file_exists('app/configPath.php')) {
+        include 'app/configPath.php';
+        $configFileExists = true;
         return $configFileExists;
     } else {
         return $configFileExists;
