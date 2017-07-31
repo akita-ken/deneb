@@ -75,9 +75,9 @@ function configInit($path)
 {
     global $container;
 
-    $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'config.ini';
+    $path = rtrim($path, DIRECTORY_SEPARATOR) . '/config.ini';
 
-    $fp = fopen('configPath.php', 'w');
+    $fp = fopen('app/configPath.php', 'w');
 
     $configPathFileString = '<?php
         define(\'CONFIG_FILE_PATH\', \'' . $path . '\');
@@ -337,6 +337,7 @@ function createNavigation($pages, $pagePath, $index = false)
     $navigation = array();
 
     foreach ($iterator as $leafKey => $leafValue) {
+        $leafValue = str_replace(DIRECTORY_SEPARATOR, '/', $leafValue); // convert all paths to forward slash
         $keys = array();
         $meta = readMeta($leafValue);
 
@@ -371,6 +372,7 @@ function createReverseNavigation($pages)
     $reverseNavigation = array();
 
     foreach ($iterator as $leafKey => $leafValue) {
+        $leafValue = str_replace(DIRECTORY_SEPARATOR, '/', $leafValue); // convert all paths to forward slash
         $keys = array();
         $meta = readMeta($leafValue);
         $reverseNavigation[$meta['hash']] = $leafValue;
