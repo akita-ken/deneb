@@ -36,7 +36,17 @@
         background: #ffcc99;
       }
 
+      .required {
+        color: #f61;
+      }
+
+      .tip {
+        border-color: #2d2;
+        background: #dfd;
+      }
+
       code {
+        padding: 0.2em;
         background-color: #ddd;
       }
 
@@ -59,23 +69,35 @@
     <nav class="nav" tabindex="-1" onclick="this.focus()">
       <div class="container">
         <a class="pagename current deneb-logo-nav" href="#"><img class="deneb-logo" src="img/deneb-logo.svg" alt="deneb" /></a>
+        <a href="#">Application brief</a>
+        <a href="#">Requirements</a>
         <a href="#">Install</a>
         <a href="#">Configure</a>
-        <a href="#">Application structure</a>
         <a href="#">Page creation flow</a>
         <a href="#">Templates</a>
+        <a href="#">Technical design</a>
       </div>
     </nav>
     <button class="btn-close btn btn-sm">x</button>
 
     <div class="container">
-      <div class="msg"><strong>Note</strong> This is a living document, and will update over time as features are completed/introduced/tweaked</div>
+      <h2>Documentation</h2>
+      <div class="msg"><strong>Note</strong> This is a living document, and will update over time as features are completed/introduced/tweaked.</div>
+      <h3>Application brief</h3>
+      <p>Deneb is a simple flat-file content management system written in PHP. Built on the <a href="http://www.slimframework.com/">Slim Microframework</a> and implementing the <a href="http://twig.sensiolabs.org/">Twig</a> templating engine, it is designed to have a low memory footprint.</p>
+      <p>The entire logic of the application is contained in <code>apps/deneb.php</code> with just one include for utility methods in <code>apps/utility.php</code> (not counting third-party dependencies handled by Composer). For single maintainer low traffic sites, or servers with very limited resources that cannot be devoted to a database engine, Deneb is an ideal solution.</p>
+      <h3>Requirements</h3>
+      <ul>
+        <li>Nginx or Apache with mod_rewrite or equivalent (other servers may work, but have not been tested)</li>
+        <li>PHP 5.5.0 or later</li>
+        <li><a href="https://getcomposer.org/">Composer</a> (if not downloading a release archive)</li>
+      </ul>
       <h3>Install</h3>
         <p>There are a few ways of installing Deneb:</p>
         <ul>
           <li class="bold">Cloning the project repository (currently recommended)</li>
           <p>Installation of Deneb can be as simple as cloning the project repository into the server webroot and performing a <code>composer update</code> to download all the necessary dependencies.</p>
-          <div class="msg caution">If you choose this method, either restrict your web server's access to the <code>.git</code> folder (if you wish to be able to update Deneb by doing a <code>git pull</code> on the master branch), or delete the folder entirely. <a href="#">See why</a> you should do this.</div>
+          <div class="msg caution">If you choose this method, either restrict your web server's access to the <code>.git</code> folder (if you wish to be able to update Deneb by doing a <code>git pull</code> on the master branch), or delete the folder entirely. <a href="https://en.internetwache.org/dont-publicly-expose-git-or-how-we-downloaded-your-websites-sourcecode-an-analysis-of-alexas-1m-28-07-2015/">See why</a> you should do this.</div>
           <li class="bold">Downloading a release archive</li>
           <p>Alternatively, you can download a release archive from Git directly. I make sure to tag commits at certain milestones, so this might be an option if you are deploying to a server that does not have Git installed or shell access enabled (which might be the case with many shared hosting services).</p>
           <li class="bold">Composer (WIP: *read* does not work yet)</li>
@@ -84,6 +106,7 @@
       <h3>Configure</h3>
       <p>If nothing goes wrong, Deneb will prompt for the creation of an administrator account the first time the appliation is run. This form <em>cannot</em> be bypassed, as the </p>
       <p>The following details that are collected, along with their descriptions, are shown below:</p>
+      <small class="bold required">All fields are required</small>
       <ul>
         <li class="bold">Username</li>
         <p>This is the username that the user will log in to the administration page with</p>
@@ -97,21 +120,56 @@
         <p>This is the path where the application configuration file <code>config.ini</code> will be created.
         <div class="msg warning"><strong>Important</strong> It is very important that the configuration file path be stored in a place that is outside the web root but still writable by the web server. Deneb is hardcoded to attempt to prevent the user from specifying a path in the web root, but this might not work on servers where it cannot determine its filepath.</div>
       </ul>
-      <h3>Application structure</h3>
-      <p>Deneb is designed to be very simple and low footprint. The entire logic of the application is contained in <code>apps/deneb.php</code> with just one include (not counting third-party dependencies handled by Composer). The idea is that  </p>
       <h3>Page creation flow</h3>
       <p>Deneb pages are stored in <code>pages/</code> as flat files, and consist of two parts:</p>
       <ul>
         <li>an extensible metadata section that is written in JSON format</li>
         <li>and a content section that is written in Markdown syntax</li>
       </ul>
+      <div class="msg"><strong>Note</strong> The following information is also displayed as tips in the application itself, for quick reference.</div>
       <p>To create a new page, the following fields are collected:</p>
       <ul>
-        <li class="bold"></li>
-        <p></p>
+        <li class="bold">URL Path <small class="required">required field</small></li>
+        <p>This is where the page resides in the directory structure, and will consequently be how the URL route will be created. <span class="bold">Note: deneb currently only supports up to 2 layers of nesting, and will reject a path that contains more than that.</span></p>
+        <li class="bold">Linkname <small class="required">required field</small></li>
+        <p>Name that will be used in the automatically generated navigation bar</p>
+        <li class="bold">Title</li>
+        <p>Sets the <code>&lt;title&gt;</code> of the page</p>
+        <li class="bold">Header</li>
+        <p>Appears as a <code>&lt;h1&gt;</code> on the top of the page</p>
+        <li class="bold">Date</li>
+        <p>Used as the 'last updated' date tag on the page if 'display date' is enabled</p>
+        <li class="bold">Description</li>
+        <p>Used in <code>&lt;meta&gt;</code> and other relevant tags for SEO</p>
+        <li class="bold">Category</li>
+        <p>Currently only used for generating badges on the admin interface, leave blank for an 'Uncategorised' badge</p>
+        <li class="bold">Display date<li>
+        <p>Setting this to 'yes' will make Deneb display a little 'last updated' date tag on the top-right of the page. Needless to say, the page date must be set, otherwise it will display a blank value</p>
       </ul>
+      <h4>Uploading media</h4>
+      <p>Deneb implements a basic file upload mechanism for page media. No fancy file browsers here. Uploads are placed in <code>/uploads</code> in a folder with the page's hash as the folder name.</p>
+      <p></p>
+      <div class="msg tip"><strong>Tip</strong> The blue 'upload' button also functions as a submit button for the form. If you have filled out all required fields, it will proceed to create the page before storing the uploaded file (as it needs the page hash for the upload folder name). Otherwise, it will just throw back the usual validation errors as if you had clicked on the 'submit' button instead.</div>
       <h3>Templates</h3>
       <p>Out of the box, Deneb ships with a default template called 'deneb', and is hardcoded to set that as the site template if it does not find a configuration property for it (which will be the case if the application is being run for the first time, or if the configuration file is corrupted)</p>
+      <p>Deneb makes a distinction between the <strong>site template</strong> and <strong>page template</strong>:</p>
+      <li class="bold">Site template</li>
+      <p>As the name suggests, site templates are used throughout the site, including the administration interface. It is set in the first </p>
+      <li class="bold">Page template</li>
+      <p></p>
+      <h4>Creating a custom template</h4>
+      <p>Creating custom template for Deneb is easy. Simply create a folder for your new template in the <code>/templates</code> folder - the folder name will be used as the template name. In it, make sure you have these 7 Twig templates:</p>
+      <ul>
+        <li><span class="bold">admin.twig</span> - Template for the administration interface, useful if you want to style it differently from the rest of the site, or extend its functionality using Javascript</li>
+        <li><span class="bold">base.twig</span> - Used as the skeleton for every page on the site, all the other template should extend this template. It should contain the <code>&lt;html&gt;</code> and <code>&lt;head&gt;</code> tags. In the stock 'deneb' template, it is also where the <code>{{ asset_path }}</code> Twig variable is set.</li>
+        <li><span class="bold">edit.twig</span>
+        <li><span class="bold">login.twig</span>
+        <li><span class="bold">new.twig</span>
+        <li><span class="bold">page.twig</span>
+        <li><span class="bold">stats.twig</span> - Template for the statistics page in the administration interface. Useful if you want to make a custom dashboard.</li>
+      </ul>
+      <h3>Techhnical design</h3>
+      <p>Because Deneb relies on flat files for persistent storage of site content, it scans the <code>/pages</code> directory and rebuilds the site tree with every request. Obviously, this is not going to be scalable for high-traffic sites, which Deneb was not intended for. However in my testing, I've found that loads times are generally negligible as long as the server it is being run on has decent disk I/O.
     </div>
   </body>
 </html>
