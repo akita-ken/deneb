@@ -15,6 +15,10 @@
         font-family: 'Roboto', sans-serif;
       }
 
+      .bold {
+        font-weight: bold;
+      }
+
       .deneb-logo-nav {
       }
 
@@ -22,11 +26,29 @@
         height: 24px;
       }
 
+      .warning {
+        border-color: #e44;
+        background: #fdd;
+      }
+
+      .caution {
+        border-color: #ff8822;
+        background: #ffcc99;
+      }
+
+      code {
+        background-color: #ddd;
+      }
+
       h3 {
         margin: 0.2em 0;
         border-bottom: 2px solid;
         margin-bottom: 15px;
         padding-bottom: 5px;
+      }
+
+      div {
+        margin: 1.5em 0;
       }
     </style>
 
@@ -47,11 +69,49 @@
     <button class="btn-close btn btn-sm">x</button>
 
     <div class="container">
+      <div class="msg"><strong>Note</strong> This is a living document, and will update over time as features are completed/introduced/tweaked</div>
       <h3>Install</h3>
+        <p>There are a few ways of installing Deneb:</p>
+        <ul>
+          <li class="bold">Cloning the project repository (currently recommended)</li>
+          <p>Installation of Deneb can be as simple as cloning the project repository into the server webroot and performing a <code>composer update</code> to download all the necessary dependencies.</p>
+          <div class="msg caution">If you choose this method, either restrict your web server's access to the <code>.git</code> folder (if you wish to be able to update Deneb by doing a <code>git pull</code> on the master branch), or delete the folder entirely. <a href="#">See why</a> you should do this.</div>
+          <li class="bold">Downloading a release archive</li>
+          <p>Alternatively, you can download a release archive from Git directly. I make sure to tag commits at certain milestones, so this might be an option if you are deploying to a server that does not have Git installed or shell access enabled (which might be the case with many shared hosting services).</p>
+          <li class="bold">Composer (WIP: *read* does not work yet)</li>
+          <p>I am trying to figure out how to distribute Deneb using Composer via Packagist. Theoretically, this could make the installation process as simple as doing a <code>composer require akita-ken/deneb</code>. However, there are a number of issues that are preventing me from doing so just yet - so although the package already exists, it will not be installable due to minimum stability requirements.</p>
+        </ul>
       <h3>Configure</h3>
+      <p>If nothing goes wrong, Deneb will prompt for the creation of an administrator account the first time the appliation is run. This form <em>cannot</em> be bypassed, as the </p>
+      <p>The following details that are collected, along with their descriptions, are shown below:</p>
+      <ul>
+        <li class="bold">Username</li>
+        <p>This is the username that the user will log in to the administration page with</p>
+        <li class="bold">Display name</li>
+        <p>This field is collected but is currently not used for anything</p>
+        <li class="bold">Password</li>
+        <p>Deneb enforces a minimum password length of 8 characters</p>
+        <li class="bold">Email</li>
+        <p>This field is collected but is currently not used for anything</p>
+        <li class="bold">Configuration file path</li>
+        <p>This is the path where the application configuration file <code>config.ini</code> will be created.
+        <div class="msg warning"><strong>Important</strong> It is very important that the configuration file path be stored in a place that is outside the web root but still writable by the web server. Deneb is hardcoded to attempt to prevent the user from specifying a path in the web root, but this might not work on servers where it cannot determine its filepath.</div>
+      </ul>
       <h3>Application structure</h3>
+      <p>Deneb is designed to be very simple and low footprint. The entire logic of the application is contained in <code>apps/deneb.php</code> with just one include (not counting third-party dependencies handled by Composer). The idea is that  </p>
       <h3>Page creation flow</h3>
+      <p>Deneb pages are stored in <code>pages/</code> as flat files, and consist of two parts:</p>
+      <ul>
+        <li>an extensible metadata section that is written in JSON format</li>
+        <li>and a content section that is written in Markdown syntax</li>
+      </ul>
+      <p>To create a new page, the following fields are collected:</p>
+      <ul>
+        <li class="bold"></li>
+        <p></p>
+      </ul>
       <h3>Templates</h3>
+      <p>Out of the box, Deneb ships with a default template called 'deneb', and is hardcoded to set that as the site template if it does not find a configuration property for it (which will be the case if the application is being run for the first time, or if the configuration file is corrupted)</p>
     </div>
   </body>
 </html>
