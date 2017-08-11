@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io/api/phpstorm,sublimetext,windows,osx,composer
 
+### Dev tools ###
+phpDocumentor.phar
+
 ### deneb Pages ###
 pages/*
 !pages/index.md
