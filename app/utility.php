@@ -1,11 +1,35 @@
 <?php
+/**
+ * utility.php - Utility methods for Deneb flat-file CMS
+ */
 
+/**
+ * Replaces all double quotes in an input string with single quotes
+ *
+ * @params string $text String
+ * @return string $converted
+ */
 function convertQuotes($text)
 {
     $converted = str_replace('\"', '\'', $text);
     return $converted;
 }
 
+/**
+ * Takes in data for a new page as an array as input and checks
+ * if all fields are valid
+ *
+ * Ensures that all required fields (page path and linkname) are filled,
+ * and enforces pathname requirements (must start with a forward-slash, cannot
+ * just be a a foward-slash with no name).
+ *
+ * Collates all encpimterd erorrs into a single string by concatenating
+ *
+ * @params string[] $pageData Associative array that stores the form data from the
+ * 'create new page' page
+ * @return string $validationResult Returns a string containing a HTML list
+ * of all validation errors, otherwise just returns 'valid'.
+ */
 function pageFieldValidation($pageData)
 {
     $validationResult = 'valid';
@@ -45,6 +69,12 @@ function pageFieldValidation($pageData)
     return $validationResult;
 }
 
+/**
+ * Simple way of piping PHP variables out into the response and into the
+ * browser console as JSON
+ *
+ * @params mixed $data Data to be encoded as JSON and echoed out into the response
+ */
 function console_log($data)
 {
   echo '<script>';
@@ -52,12 +82,25 @@ function console_log($data)
   echo '</script>';
 }
 
+/**
+ * Accepts a session object and attempts to check if the auth flag has been
+ * set (i.e. the administrator has logged in)
+ *
+ * @params object $session
+ */
+
 function sessionCheck($session)
 {
     $segment = $session->getSegment('deneb');
     return $segment->get('auth');
 }
 
+/**
+ * Checks if the configPath.php file exists, which is an indicator of whether
+ * the application has been run before, and includes it if it does
+ *
+ * @return boolean $configFileExists
+ */
 function firstRunCheck()
 {
     static $configFileExists = false;
@@ -71,6 +114,13 @@ function firstRunCheck()
     }
 }
 
+/**
+ * Creates the config.ini file in the path provided, and sets the following
+ * default values:
+ *
+ *
+ *
+ */
 function configInit($path)
 {
     global $container;
@@ -103,6 +153,11 @@ function configInit($path)
     return true;
 }
 
+/**
+ *
+ *
+ */
+
 function setConfig($session)
 {
     $config = new Config_Lite(CONFIG_FILE_PATH, LOCK_EX);
@@ -120,6 +175,11 @@ function setConfig($session)
     }
 }
 
+/**
+ *
+ *
+ */
+
 function createAdminUser($userDetails)
 {
     $config = new Config_Lite(CONFIG_FILE_PATH);
@@ -133,6 +193,11 @@ function createAdminUser($userDetails)
 
     return true;
 }
+
+/**
+ *
+ *
+ */
 
 function setupFieldValidation($pageData)
 {
@@ -173,6 +238,11 @@ function setupFieldValidation($pageData)
     return $validationResult;
 }
 
+/**
+ *
+ *
+ */
+
 function loadPages($path)
 {
     $pages = array();
@@ -191,6 +261,12 @@ function loadPages($path)
     return $pages;
 }
 
+/**
+ * Scans the template directory and builds a list of valid templates for use
+ * by Deneb.
+ *
+ * 'Valid templates' are folders that contain the following 6 required files:
+ */
 function loadTemplates($path = 'templates', $depth = 0)
 {
     $templates = array();
@@ -227,6 +303,15 @@ function loadTemplates($path = 'templates', $depth = 0)
     return $templates;
 }
 
+/**
+ * Scans the provided path for additional Twig files that will be presented to
+ * the user as page templates.
+ *
+ * The
+ *
+ * @params string $path The path to scan. This is usually the site template folder
+ */
+
 function loadPageTemplates($path)
 {
     $templates = array();
@@ -248,6 +333,14 @@ function loadPageTemplates($path)
     return $templates;
 }
 
+/**
+ * Scans the provided path for files and returns an associative array
+ * with the filename as key and the filepath as value
+ *
+ * @params string $path The path to scan. This is usually the folder in /upload that corresponds to the page's hash.
+ * @return string[] @files
+ */
+
 function loadFiles($path)
 {
     $files = array();
@@ -264,6 +357,12 @@ function loadFiles($path)
     }
     return $files;
 }
+
+/**
+ * Accepts an array of pages, the application object, and a
+ *
+ *
+ */
 
 function createRoutes($pages, $app, $pagePath)
 {
@@ -331,6 +430,13 @@ function createRoutes($pages, $app, $pagePath)
     }
 }
 
+/**
+ * Returns an associative array that contains the pages' lnkname as key and the description/category as value.;
+ *
+ * @params
+ * @return
+ */
+
 function createNavigation($pages, $pagePath, $index = false)
 {
     $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($pages));
@@ -366,6 +472,14 @@ function createNavigation($pages, $pagePath, $index = false)
     return $navigation;
 }
 
+/**
+ * Creates a reverse 'lookup table' for servicing responses to the uRL routes we have created
+ * n createRoutes()
+ *
+ * @parms string[] $pages
+ * @return string[] $reverseNavigation
+ */
+
 function createReverseNavigation($pages)
 {
     $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($pages));
@@ -380,6 +494,11 @@ function createReverseNavigation($pages)
     return $reverseNavigation;
 }
 
+/**
+ *
+ *
+ */
+
 function writePage($pageData, $content)
 {
     $file = fopen($pageData['path'], 'w');
@@ -390,6 +509,11 @@ function writePage($pageData, $content)
     fwrite($file, $page);
     fclose($file);
 }
+
+/**
+ *
+ *
+ */
 
 function readMeta($path)
 {
@@ -403,6 +527,11 @@ function readMeta($path)
     return $pageMeta;
 }
 
+/**
+ *
+ *
+ */
+
 function readPage($path)
 {
     $page = array();
@@ -413,6 +542,12 @@ function readPage($path)
     return $page;
 }
 
+/**
+ *
+ *
+ *
+ */
+
 function doAuthentication($loginDetails)
 {
   $config = new Config_Lite(CONFIG_FILE_PATH);
@@ -421,6 +556,11 @@ function doAuthentication($loginDetails)
   }
   return false;
 }
+
+/**
+ *
+ *
+ */
 
 function createPath($path)
 {
@@ -434,6 +574,11 @@ function createPath($path)
     }
     return true;
 }
+
+/**
+ *
+ *
+ */
 
 function deletePage($path)
 {
@@ -457,10 +602,20 @@ function deletePage($path)
     return $result;
 }
 
+/**
+ *
+ *
+ */
+
 function deleteFile($path)
 {
     return unlink($path);
 }
+
+/**
+ *
+ *
+ */
 
 function deleteDirectory($path)
 {
@@ -482,15 +637,19 @@ function deleteDirectory($path)
 
     return $result;
 }
- 
-function getApplicationSettings($attribute) 
+
+/**
+ *
+ *
+ */
+
+function getApplicationSettings($attribute)
 {
     if (defined("CONFIG_FILE_PATH")) {
-        $config = new Config_Lite(CONFIG_FILE_PATH); 
+        $config = new Config_Lite(CONFIG_FILE_PATH);
         // fall-back on default template if not set
-        return $config->get('application', $attribute, 'deneb'); 
+        return $config->get('application', $attribute, 'deneb');
     } else {
         return 'deneb'; // we must set the default template manually if there is no config.ini
     }
-} 
- 
+}
